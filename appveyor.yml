@@ -15,7 +15,7 @@ before_build:
     - dir
 
 build:
-  project: $(APPVEYOR_BUILD_FOLDER)\cfsched\$(APPVEYOR_PROJECT_NAME).sln
+  project: $(APPVEYOR_BUILD_FOLDER)\cfsched\cfsched.sln
 
 test_script:
   - '.\tests\%CONFIGURATION%\tests.exe'
