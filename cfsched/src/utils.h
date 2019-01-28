@@ -6,6 +6,9 @@
 #include <vector>
 #include <random>
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <istream>
 
 namespace cfsched{
  
