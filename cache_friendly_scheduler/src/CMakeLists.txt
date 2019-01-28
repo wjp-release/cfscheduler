@@ -1,0 +1,5 @@
+aux_source_directory(. DIRSRCS)
+add_library(cfsched ${DIRSRCS})  
+if(UNIX)
+	target_link_libraries(cfsched pthread)
+endif()

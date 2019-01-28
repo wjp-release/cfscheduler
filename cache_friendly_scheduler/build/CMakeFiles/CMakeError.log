@@ -1,0 +1,28 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/ninja" "cmTC_a35fb"
+[1/2] Building C object CMakeFiles/cmTC_a35fb.dir/CheckSymbolExists.c.o
+[2/2] Linking C executable cmTC_a35fb
+FAILED: cmTC_a35fb 
+: && /usr/bin/cc   -rdynamic CMakeFiles/cmTC_a35fb.dir/CheckSymbolExists.c.o  -o cmTC_a35fb   && :
+CMakeFiles/cmTC_a35fb.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+File /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
