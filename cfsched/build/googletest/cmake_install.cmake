@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/d/projects/cfscheduler/cache_friendly_scheduler/googletest
+# Install script for directory: /mnt/d/projects/cfscheduler/cfsched/googletest
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -118,7 +118,7 @@ rule CXX_EXECUTABLE_LINKER__tests
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cache_friendly_scheduler -B/mnt/d/projects/cfscheduler/cache_friendly_scheduler/build
+  command = /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
   description = Re-running CMake...
   generator = 1
 

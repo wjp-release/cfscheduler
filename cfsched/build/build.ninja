@@ -34,7 +34,7 @@ include rules.ninja
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cache_friendly_scheduler -B/mnt/d/projects/cfscheduler/cache_friendly_scheduler/build
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -44,7 +44,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # Utility command for test
 
 build CMakeFiles/test.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build && /usr/bin/ctest --force-new-ctest-process
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build && /usr/bin/ctest --force-new-ctest-process
   DESC = Running tests...
   pool = console
   restat = 1
@@ -54,13 +54,13 @@ build test: phony CMakeFiles/test.util
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build edit_cache: phony CMakeFiles/edit_cache.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /mnt/d/projects/cfscheduler/cache_friendly_scheduler/CMakeLists.txt
+# /mnt/d/projects/cfscheduler/cfsched/CMakeLists.txt
 # =============================================================================
 
 
@@ -68,7 +68,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build src/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/src && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cache_friendly_scheduler -B/mnt/d/projects/cfscheduler/cache_friendly_scheduler/build
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/src && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -78,7 +78,7 @@ build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
 # Utility command for edit_cache
 
 build src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/src && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/src && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build src/edit_cache: phony src/CMakeFiles/edit_cache.util
@@ -128,14 +128,14 @@ build src/libcfsched.a: CXX_STATIC_LIBRARY_LINKER__cfsched src/CMakeFiles/cfsche
 # Utility command for test
 
 build src/CMakeFiles/test.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/src && /usr/bin/ctest --force-new-ctest-process
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/src && /usr/bin/ctest --force-new-ctest-process
   DESC = Running tests...
   pool = console
   restat = 1
 build src/test: phony src/CMakeFiles/test.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /mnt/d/projects/cfscheduler/cache_friendly_scheduler/CMakeLists.txt
+# /mnt/d/projects/cfscheduler/cfsched/CMakeLists.txt
 # =============================================================================
 
 
@@ -143,7 +143,7 @@ build src/test: phony src/CMakeFiles/test.util
 # Utility command for edit_cache
 
 build samples/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/samples && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/samples && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build samples/edit_cache: phony samples/CMakeFiles/edit_cache.util
@@ -152,7 +152,7 @@ build samples/edit_cache: phony samples/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build samples/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/samples && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cache_friendly_scheduler -B/mnt/d/projects/cfscheduler/cache_friendly_scheduler/build
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/samples && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -181,8 +181,8 @@ build samples/CMakeFiles/sample.dir/main.cc.o: CXX_COMPILER__sample ../samples/m
 
 build samples/sample: CXX_EXECUTABLE_LINKER__sample samples/CMakeFiles/sample.dir/main.cc.o | src/libcfsched.a || src/libcfsched.a
   FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
-  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cache_friendly_scheduler/./src src/libcfsched.a -lpthread
-  LINK_PATH = -L/mnt/d/projects/cfscheduler/cache_friendly_scheduler/./src
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src src/libcfsched.a -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src
   OBJECT_DIR = samples/CMakeFiles/sample.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -193,14 +193,14 @@ build samples/sample: CXX_EXECUTABLE_LINKER__sample samples/CMakeFiles/sample.di
 # Utility command for test
 
 build samples/CMakeFiles/test.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/samples && /usr/bin/ctest --force-new-ctest-process
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/samples && /usr/bin/ctest --force-new-ctest-process
   DESC = Running tests...
   pool = console
   restat = 1
 build samples/test: phony samples/CMakeFiles/test.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /mnt/d/projects/cfscheduler/cache_friendly_scheduler/CMakeLists.txt
+# /mnt/d/projects/cfscheduler/cfsched/CMakeLists.txt
 # =============================================================================
 
 
@@ -208,7 +208,7 @@ build samples/test: phony samples/CMakeFiles/test.util
 # Utility command for rebuild_cache
 
 build googletest/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/googletest && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cache_friendly_scheduler -B/mnt/d/projects/cfscheduler/cache_friendly_scheduler/build
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/googletest && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -218,7 +218,7 @@ build googletest/rebuild_cache: phony googletest/CMakeFiles/rebuild_cache.util
 # Utility command for test
 
 build googletest/CMakeFiles/test.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/googletest && /usr/bin/ctest --force-new-ctest-process
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/googletest && /usr/bin/ctest --force-new-ctest-process
   DESC = Running tests...
   pool = console
   restat = 1
@@ -257,7 +257,7 @@ build lib/libgtest.a: CXX_STATIC_LIBRARY_LINKER__gtest googletest/CMakeFiles/gte
 # Utility command for edit_cache
 
 build googletest/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/googletest && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/googletest && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build googletest/edit_cache: phony googletest/CMakeFiles/edit_cache.util
@@ -292,7 +292,7 @@ build lib/libgtest_main.a: CXX_STATIC_LIBRARY_LINKER__gtest_main googletest/CMak
   TARGET_PDB = gtest_main.a.dbg
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /mnt/d/projects/cfscheduler/cache_friendly_scheduler/CMakeLists.txt
+# /mnt/d/projects/cfscheduler/cfsched/CMakeLists.txt
 # =============================================================================
 
 
@@ -300,7 +300,7 @@ build lib/libgtest_main.a: CXX_STATIC_LIBRARY_LINKER__gtest_main googletest/CMak
 # Utility command for rebuild_cache
 
 build tests/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/tests && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cache_friendly_scheduler -B/mnt/d/projects/cfscheduler/cache_friendly_scheduler/build
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/tests && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -310,7 +310,7 @@ build tests/rebuild_cache: phony tests/CMakeFiles/rebuild_cache.util
 # Utility command for edit_cache
 
 build tests/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/tests && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/tests && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build tests/edit_cache: phony tests/CMakeFiles/edit_cache.util
@@ -344,8 +344,8 @@ build tests/CMakeFiles/tests.dir/task.test.cc.o: CXX_COMPILER__tests ../tests/ta
 
 build tests/tests: CXX_EXECUTABLE_LINKER__tests tests/CMakeFiles/tests.dir/stack.test.cc.o tests/CMakeFiles/tests.dir/task.test.cc.o | lib/libgtest_main.a src/libcfsched.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a src/libcfsched.a
   FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
-  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cache_friendly_scheduler/./src lib/libgtest_main.a src/libcfsched.a lib/libgtest.a -pthread -lpthread
-  LINK_PATH = -L/mnt/d/projects/cfscheduler/cache_friendly_scheduler/./src
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src lib/libgtest_main.a src/libcfsched.a lib/libgtest.a -pthread -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src
   OBJECT_DIR = tests/CMakeFiles/tests.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -356,7 +356,7 @@ build tests/tests: CXX_EXECUTABLE_LINKER__tests tests/CMakeFiles/tests.dir/stack
 # Utility command for test
 
 build tests/CMakeFiles/test.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/tests && /usr/bin/ctest --force-new-ctest-process
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/tests && /usr/bin/ctest --force-new-ctest-process
   DESC = Running tests...
   pool = console
   restat = 1
@@ -379,25 +379,25 @@ build tests: phony tests/tests
 # =============================================================================
 
 #############################################
-# Folder: /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/googletest
+# Folder: /mnt/d/projects/cfscheduler/cfsched/build/googletest
 
 build  googletest/all: phony gtest gtest_main
 # =============================================================================
 
 #############################################
-# Folder: /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/samples
+# Folder: /mnt/d/projects/cfscheduler/cfsched/build/samples
 
 build  samples/all: phony sample
 # =============================================================================
 
 #############################################
-# Folder: /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/src
+# Folder: /mnt/d/projects/cfscheduler/cfsched/build/src
 
 build  src/all: phony cfsched
 # =============================================================================
 
 #############################################
-# Folder: /mnt/d/projects/cfscheduler/cache_friendly_scheduler/build/tests
+# Folder: /mnt/d/projects/cfscheduler/cfsched/build/tests
 
 build  tests/all: phony tests
 # =============================================================================
