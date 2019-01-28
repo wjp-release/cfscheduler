@@ -10,12 +10,12 @@ configuration:
   - Debug
 
 before_build:
-    - cd ./libasync
+    - cd ./cfsched
     - cmake -G "Visual Studio 15 2017 Win64" . -Dtest=ON
     - dir
 
 build:
-  project: $(APPVEYOR_BUILD_FOLDER)\libasync\$(APPVEYOR_PROJECT_NAME).sln
+  project: $(APPVEYOR_BUILD_FOLDER)\cfsched\$(APPVEYOR_PROJECT_NAME).sln
 
 test_script:
   - '.\tests\%CONFIGURATION%\tests.exe'

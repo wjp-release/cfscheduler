@@ -10,7 +10,7 @@ addons:
       - g++-8
 
 script:
-  - cd libasync
+  - cd cfsched
   - ls
   - cd build
   - rm -rf *
