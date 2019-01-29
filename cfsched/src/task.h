@@ -3,10 +3,12 @@
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
+#include <cstdio>
 #include "cfsched.h"
 
 namespace cfsched{
 struct FixSizedTask{ 
+    FixSizedTask(){}
     struct FixSizedTaskMeta{ // very compact meta data. 
         FixSizedTaskMeta() : next(nullptr), refcnt(0) {}
         std::atomic<FixSizedTask*> next; // intrusive linked list node 
@@ -41,6 +43,10 @@ struct FixSizedTask{
     }
     bool isDone() const noexcept{ // isDone: a mark for delayed garbage collection.
         return (meta.state&meta.isDoneMask)==meta.isDoneMask;
+    }
+    bool isRoot() const noexcept{
+        auto location_=location();
+        return location_==6 || location_==7 || location_==8;
     }
     void setIsDone(bool done) noexcept{
         if(done){
@@ -78,17 +84,56 @@ struct FixSizedTask{
     T& taskReference() noexcept{
         return *reinterpret_cast<T*>(taskAddress);
     }
+    void printState() noexcept{
+        printf("state=0x%x\n", meta.state);
+    }
     void reset() noexcept{ // reset data members before recycling into freelist again
         //@todo
     }
+    void decreasePendingCount(){
+        uint32_t pendingcnt= meta.pendingcnt.fetch_sub(1);
+        if(pendingcnt==1){ // last child done
+            setIsDone(true);
+        } 
+    }
+    void tryDecreaseParentPendingCount(){
+        if(meta.parent){
+            meta.parent->decreasePendingCount();
+        }
+    }
+    static FixSizedTaskMeta& getMetaReference(Task* task) noexcept{
+        return reinterpret_cast<FixSizedTaskMeta*>(task)[-1];
+    }
+    static FixSizedTaskMeta* getMetaPointer(Task* task) noexcept{
+        return &(reinterpret_cast<FixSizedTaskMeta*>(task)[-1]);
+    }
+    static FixSizedTask& getFixSizedTaskReference(Task* task) noexcept{
+        return *reinterpret_cast<FixSizedTask*>(reinterpret_cast<FixSizedTaskMeta*>(task)-1);
+    }
+    static FixSizedTask* getFixSizedTaskPointer(Task* task) noexcept{
+        return reinterpret_cast<FixSizedTask*>(reinterpret_cast<FixSizedTaskMeta*>(task)-1);
+    }
+    // Do not change the order of data members
     FixSizedTaskMeta meta;
     char taskAddress[Options::FixedSizeTaskSize-sizeof(FixSizedTaskMeta)]; // padded to 64/128/256 bytes
 };
 // Root task needs mtx&cv to implement blocking wait. 
 struct RootTask : public FixSizedTask{ 
+    static RootTask& getRootTaskReference(Task* task) noexcept{
+        return *reinterpret_cast<RootTask*>(reinterpret_cast<FixSizedTaskMeta*>(task)-1);
+    }
+    static RootTask* getRootTaskPointer(Task* task) noexcept{
+        return reinterpret_cast<RootTask*>(reinterpret_cast<FixSizedTaskMeta*>(task)-1);
+    }
+    void notifyAll(){ // wake up blocking threads
+        cv.notify_all();
+    }
     std::mutex mtx;
     std::condition_variable cv;
 };
+
+
+
 
 
 

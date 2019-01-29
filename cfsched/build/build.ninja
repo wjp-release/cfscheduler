@@ -90,6 +90,12 @@ build src/edit_cache: phony src/CMakeFiles/edit_cache.util
 # Order-only phony target for cfsched
 
 build cmake_object_order_depends_target_cfsched: phony
+build src/CMakeFiles/cfsched.dir/buffer.cc.o: CXX_COMPILER__cfsched ../src/buffer.cc || cmake_object_order_depends_target_cfsched
+  DEP_FILE = src/CMakeFiles/cfsched.dir/buffer.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
+  INCLUDES = -I.././include -I.././src
+  OBJECT_DIR = src/CMakeFiles/cfsched.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/stack.cc.o: CXX_COMPILER__cfsched ../src/stack.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/stack.cc.o.d
   FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
@@ -116,7 +122,7 @@ build src/CMakeFiles/cfsched.dir/utils.cc.o: CXX_COMPILER__cfsched ../src/utils.
 #############################################
 # Link the static library src/libcfsched.a
 
-build src/libcfsched.a: CXX_STATIC_LIBRARY_LINKER__cfsched src/CMakeFiles/cfsched.dir/stack.cc.o src/CMakeFiles/cfsched.dir/task.cc.o src/CMakeFiles/cfsched.dir/utils.cc.o
+build src/libcfsched.a: CXX_STATIC_LIBRARY_LINKER__cfsched src/CMakeFiles/cfsched.dir/buffer.cc.o src/CMakeFiles/cfsched.dir/stack.cc.o src/CMakeFiles/cfsched.dir/task.cc.o src/CMakeFiles/cfsched.dir/utils.cc.o
   LANGUAGE_COMPILE_FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   POST_BUILD = :

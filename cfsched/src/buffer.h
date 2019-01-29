@@ -6,34 +6,18 @@
 
 namespace cfsched{
 
-// TaskBuffer is a cache-friendly worker-local container of pre-constructed TaskrootTasks.
+// Buffer is a cache-friendly worker-local container of pre-constructed TaskrootTasks.
 // It holds externally submitted tasks. It's much smaller than TaskDeque.
-class TaskBuffer{
+class Buffer{
 public:
-    TaskBuffer(){
+    Buffer(){
         for(auto& b : rootTasks) b.setLocation(FixSizedTask::atBufferFreeArea);
     }
     // Return the least recently emplaced task
-    Task* steal()noexcept{
-        std::lock_guard<std::mutex> lk(mtx);
-        if(endPosition>beginPosition){
-            beginPosition++;
-            RootTask& rootTask=at(beginPosition-1);
-            rootTask.setLocation(FixSizedTask::atBufferStolenArea); // Ready-->Stolen
-            Task* userTask = rootTask.taskPointer();
-            return userTask;
-        }else{
-            return nullptr;
-        }
-    }
-    int size() const noexcept{
-        std::lock_guard<std::mutex> lk(mtx);
-        return endPosition-beginPosition;
-    }   
-    void reclaim(Task* executed)noexcept{
-        // set Free
-    }
-
+    Task* steal()noexcept;
+    int size() const noexcept;
+    void reclaim(Task* executed)noexcept;
+    
     template < class T, class... Args >  
     T* emplace(Args&&... args){
         std::lock_guard<std::mutex> lk(mtx);
