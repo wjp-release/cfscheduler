@@ -5,7 +5,12 @@
 
 namespace cfsched{
 
-struct FixSizedTask;
+class FixSizedTask;
+
+/*==================================================
+ Stack is stack structure based on Moody Camel's
+ lock-free ABA-free intrusive singly linked list.
+===================================================*/
 
 class Stack
 {

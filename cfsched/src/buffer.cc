@@ -1,7 +1,6 @@
 #include "buffer.h"
-
+#include <sstream>
 namespace cfsched{
-
 // Return the least recently emplaced task
 Task* Buffer::steal()noexcept{
     std::lock_guard<std::mutex> lk(mtx);
@@ -26,6 +25,12 @@ void Buffer::reclaim(Task* executed)noexcept{
     fixSizedTask.setLocation(FixSizedTask::atBufferFreeArea);
 }
 
+
+std::string Buffer::stats(){
+    std::stringstream ss;
+    ss<<"size="<<(endPosition-beginPosition)<<std::endl;
+    return ss.str();
+}
 
 
 }

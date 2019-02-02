@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "task.h"
+#include "task_logical.h"
 #include <iostream>
 
 using namespace cfsched;

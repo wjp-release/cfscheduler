@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "utils.h"
 #include "stack.h"
-#include "task.h"
+#include "task_physical.h"
 
 using namespace cfsched;
 

@@ -11,9 +11,13 @@
 #include <istream>
 
 namespace cfsched{
- 
+
+/*==================================================
+ A collection of thread/time/random/numeric utils.
+===================================================*/
+
     // Thread-related
-    static inline int nr_cpu(){
+    static inline int nr_cpu(){ // 2*actual cpu number due to intel hyperthreading 
         return std::thread::hardware_concurrency();
     }
 
@@ -106,8 +110,6 @@ namespace cfsched{
         return u(e);
     }
 
-    // Prettier print
- 
     // Colorful & Concurrent Print Line 
     void println(const std::string& what);
 

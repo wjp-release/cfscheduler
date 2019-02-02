@@ -1,12 +1,12 @@
 Determining if the pthread_create exist failed with the following output:
 Change Dir: /mnt/d/projects/cfscheduler/cfsched/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/ninja" "cmTC_41023"
-[1/2] Building C object CMakeFiles/cmTC_41023.dir/CheckSymbolExists.c.o
-[2/2] Linking C executable cmTC_41023
-FAILED: cmTC_41023 
-: && /usr/bin/cc   -rdynamic CMakeFiles/cmTC_41023.dir/CheckSymbolExists.c.o  -o cmTC_41023   && :
-CMakeFiles/cmTC_41023.dir/CheckSymbolExists.c.o: In function `main':
+Run Build Command:"/usr/bin/ninja" "cmTC_32684"
+[1/2] Building C object CMakeFiles/cmTC_32684.dir/CheckSymbolExists.c.o
+[2/2] Linking C executable cmTC_32684
+FAILED: cmTC_32684 
+: && /usr/bin/cc   -rdynamic CMakeFiles/cmTC_32684.dir/CheckSymbolExists.c.o  -o cmTC_32684   && :
+CMakeFiles/cmTC_32684.dir/CheckSymbolExists.c.o: In function `main':
 CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
 ninja: build stopped: subcommand failed.
