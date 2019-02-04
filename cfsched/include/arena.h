@@ -6,6 +6,7 @@
 
 namespace cfsched{
 
+class Task;
 
 /*==================================================
  Arena is Worker's private container of FixSizedTasks,
@@ -21,21 +22,43 @@ namespace cfsched{
     atStolenList: stolen by other workers     
     atLocalStack: run by local worker thread        
 ===================================================*/
-
 class Arena{
 public:
+    Arena();
     std::string     stats();
     void            setWorkerid(uint8_t id) noexcept{ 
         for(auto&t:tasks) t.setWorkerid(id);  
     }
 
+    // free --> exec (protected from stealers)
     template < class T, class... Args >  
-    T*          emplace(Args&&... args){
-        //todo
-        return nullptr;
+    T*              emplaceToExec(FixSizedTask*parent, Args&&... args){
+        FixSizedTask* addr=freeList.pop();
+        T* task = new (addr) T(std::forward<Args>(args)...);
+        FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
+        t->setParentAndIncRefcnt(parent);
+        execList.push(t);
+        return task;        
     }
+
+      // free --> exec (protected from stealers)
+    template < class T, class... Args >  
+    T*              emplaceToReady(FixSizedTask*parent, Args&&... args){
+        FixSizedTask* addr=freeList.pop();
+        T* task = new (addr) T(std::forward<Args>(args)...);
+        FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
+        t->setParentAndIncRefcnt(parent);
+        readyList.push(t);
+        return task;        
+    }  
+    
+
 private:
-    FixSizedTask tasks[Options::BufferSize];
+    FixSizedTask    tasks[Options::ArenaSize];
+    Stack           freeList;
+    Stack           readyList;
+    Stack           execList;
+    Stack           stolenList;
 };
 
 }

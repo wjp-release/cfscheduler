@@ -95,6 +95,10 @@ public:
     void        reset() noexcept{ // reset data members before recycling into freelist again
         //@todo
     }
+    void        setParentAndIncRefcnt(FixSizedTask*p){
+        meta.parent=p;
+        meta.pendingcnt.fetch_add(1);
+    }
     void        decreasePendingCount(){
         uint32_t pendingcnt= meta.pendingcnt.fetch_sub(1);
         if(pendingcnt==1){ // last child done
@@ -139,9 +143,5 @@ public:
     std::mutex mtx;
     std::condition_variable cv;
 };
-
-
-
-
 
 }

@@ -3,8 +3,6 @@
 
 namespace cfsched{
 
-// 
-
 void Stack::add(FixSizedTask* node)
 {
     // Since the refcount is zero, and nobody can increase it once it's zero (except us, and we

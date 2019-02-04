@@ -37,9 +37,16 @@ public:
     }
 
     template < class T, class... Args >  
-    T*                  emplaceInto(uint8_t index, Args&&... args)
+    T*                  emplaceExec(uint8_t index, Args&&... args)
     {
-        return workers[index].arena.emplace<T>(std::forward<Args>(args)...);
+        return workers[index].arena.emplaceToExec<T>(std::forward<Args>(args)...);
+    }
+
+
+    template < class T, class... Args >  
+    T*                  emplaceReady(uint8_t index, Args&&... args)
+    {
+        return workers[index].arena.emplaceToReady<T>(std::forward<Args>(args)...);
     }
 
     void                wakeAllSleepingWorkers()noexcept;

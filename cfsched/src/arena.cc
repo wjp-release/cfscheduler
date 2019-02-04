@@ -8,6 +8,9 @@ std::string Arena::stats(){
     return ss.str();
 }
 
+Arena::Arena(){
+    for(auto& t:tasks) freeList.push(&t);
+}
 
 
 }
