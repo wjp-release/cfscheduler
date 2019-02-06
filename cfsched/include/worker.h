@@ -24,15 +24,30 @@ namespace cfsched{
  spin. 
 ===================================================*/
 
+class Task;
+
 class Worker{
+private:
+    Task*           takeFromLocalReadyList();
+    Task*           takeFromLocalExecList();
+    Task*           stealFromLocalBuffer();
+    Task*           stealFromOtherBuffers();
+    Task*           stealFromBufferOf(Worker& worker);
+    Task*           stealFromOtherDeques();
+    Task*           stealFromDequeOf(Worker& worker);
+    bool            executeTask(Task* task);
 public:
+    void            reclaim(Task* executed) noexcept;
+    bool            findAndRunATask();
     void            findAndRunATaskOrYield();
     void            setWorkerid(uint8_t id) noexcept{ 
         this->id=id;
         buffer.setWorkerid(id);
         arena.setWorkerid(id);
     }
-    void            tryWake(){}
+    void            tryWake(){
+        // wake if it is sleeping
+    }
     bool            holdsCurrentThread() const noexcept{
         return std::this_thread::get_id()==workerThread.get_id();
     }

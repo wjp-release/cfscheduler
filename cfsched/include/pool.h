@@ -28,7 +28,9 @@ public:
     }
     void                start();
     uint8_t             currentThreadIndex()const noexcept;
-
+    uint8_t             getWorkerNumber()const noexcept{
+        return workerNumber;
+    }
     template < class T, class... Args >  
     T*                  emplaceRoot(Args&&... args)
     {

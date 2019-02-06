@@ -1,8 +1,9 @@
 #pragma once
 
-#include <string>
 #include "task_physical.h"
 #include "stack.h"
+#include <cassert>
+#include <string>
 
 namespace cfsched{
 
@@ -26,10 +27,13 @@ class Arena{
 public:
     Arena();
     std::string     stats();
+    Task*           steal();
+    Task*           takeFromReady();
+    Task*           takeFromExec();
+    void            reclaim(Task* executed) noexcept;
     void            setWorkerid(uint8_t id) noexcept{ 
         for(auto&t:tasks) t.setWorkerid(id);  
     }
-
     // free --> exec (protected from stealers)
     template < class T, class... Args >  
     T*              emplaceToExec(FixSizedTask*parent, Args&&... args){
@@ -51,8 +55,6 @@ public:
         readyList.push(t);
         return task;        
     }  
-    
-
 private:
     FixSizedTask    tasks[Options::ArenaSize];
     Stack           freeList;

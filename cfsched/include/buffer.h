@@ -51,10 +51,10 @@ protected:
         return rootTasks[index%Options::BufferSize];
     }
 private:
-    RootTask rootTasks[Options::BufferSize];  
+    RootTask    rootTasks[Options::BufferSize];  
     mutable std::mutex mtx;
-    uint64_t beginPosition=0; 
-    uint64_t endPosition=0; 
+    uint64_t    beginPosition=0; 
+    uint64_t    endPosition=0; 
 };
 
 }
