@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <atomic>
+#include <string>
 
 namespace cfsched{
 
@@ -18,7 +19,8 @@ class Stack
 public:
     Stack() : stackHead(nullptr) {}
     void            push(FixSizedTask*);
-    FixSizedTask*   pop(); // Return nullptr on failure.
+    FixSizedTask*   pop(); //return nullptr on failure.
+    std::string     stats(); //debugging stats
   private:
     void add(FixSizedTask*);
     static const uint32_t REFS_MASK = 0x7FFFFFFF;
@@ -31,7 +33,8 @@ class PrivateStack
 public:
     PrivateStack() : stackHead(nullptr) {}
     void            push(FixSizedTask*);
-    FixSizedTask*   pop(); // Return nullptr on failure.
+    FixSizedTask*   pop(); //return nullptr on failure.
+    std::string     stats();//debugging stats
 private:
     FixSizedTask*   stackHead;
 };

@@ -4,7 +4,7 @@ namespace cfsched{
 
 std::string Arena::stats(){
     std::stringstream ss;
-
+    ss<<"execList: "<<execList.stats()<<", stolenList: "<<stolenList.stats()<<", readyList: "<<readyList.stats()<<"\n";
     return ss.str();
 }
 
@@ -14,18 +14,21 @@ Arena::Arena(){
 
 Task* Arena::steal(){
     FixSizedTask* t=readyList.pop();
+    if(t==nullptr) return nullptr;
     pushToStolenList(t);
     return t->taskPointer();
 }
 
 Task* Arena::takeFromReady(){
     FixSizedTask* t=readyList.pop();
+    if(t==nullptr) return nullptr;
     t->setLocation(FixSizedTask::atLocalStack);
     return t->taskPointer();
 }
 
 Task* Arena::takeFromExec(){
     FixSizedTask* t=execList.pop();
+    if(t==nullptr) return nullptr;
     t->setLocation(FixSizedTask::atLocalStack);
     return t->taskPointer();
 }

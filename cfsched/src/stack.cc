@@ -1,5 +1,6 @@
 #include "stack.h"
 #include "task_physical.h"
+#include "task_logical.h"
 
 namespace cfsched{
 
@@ -69,6 +70,22 @@ FixSizedTask* Stack::pop()
     return nullptr;
 }
 
+std::string Stack::stats(){
+    std::string duh="Stack(";
+    int count=0;
+    FixSizedTask* pos = stackHead.load(std::memory_order_relaxed);
+    while(pos!=nullptr){
+        count++;
+        if(pos->location()!=FixSizedTask::atFreeList){
+            duh+=pos->taskPointer()->stats()+" ";
+            pos = pos->meta.next.load(std::memory_order_relaxed);
+        }else{
+            duh+="<empty> ";
+        }
+    }
+    duh+=")[count="+std::to_string(count)+"]";
+    return duh;
+}
 
 void PrivateStack::push(FixSizedTask* node)
 {
@@ -83,6 +100,23 @@ FixSizedTask* PrivateStack::pop()
     FixSizedTask* tmp=stackHead;
     stackHead=next;
     return tmp;
+}
+
+std::string PrivateStack::stats(){
+    std::string duh="Stack(";
+    int count=0;
+    FixSizedTask* pos = stackHead;
+    while(pos!=nullptr){
+        count++;
+        if(pos->location()!=FixSizedTask::atFreeList){
+            duh+=pos->taskPointer()->stats()+" ";
+            pos = pos->meta.next.load(std::memory_order_relaxed);
+        }else{
+            duh+="<empty> ";
+        }
+    }
+    duh+=")[count="+std::to_string(count)+"]";
+    return duh;
 }
 
 }

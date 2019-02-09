@@ -23,6 +23,11 @@ private:
     std::string val;
 };
 
+void basic(){
+    cfsched::Pool::instance().start();
+    cfsched::sleep(6000);
+}
+
 void simple(){
     cfsched::Pool::instance().start();
     cfsched::Pool::instance().emplaceRoot<A>(12);
@@ -32,7 +37,7 @@ void simple(){
 }
 
 int main() {
-    simple();
+    basic();
 
     return 0;
 }
