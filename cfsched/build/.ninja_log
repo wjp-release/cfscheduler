@@ -103,3 +103,5 @@
 1006	1114	1549718826	src/libcfsched.a	ae268cfe20ccc2fa
 1114	1316	1549718826	samples/sample	f6e6e2f3cbc28864
 1117	1464	1549718826	tests/tests	2fa941da3b72d273
+11	944	1549718911	samples/CMakeFiles/sample.dir/main.cc.o	b56e4ff1ca9e336c
+945	1138	1549718911	samples/sample	f6e6e2f3cbc28864

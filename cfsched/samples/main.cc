@@ -37,7 +37,7 @@ void simple(){
 }
 
 int main() {
-    basic();
+    simple();
 
     return 0;
 }
