@@ -21,46 +21,75 @@ class Task;
     atReadyList: vulnerable to stealing         
     atExecList: protected from stealing         
     atStolenList: stolen by other workers     
-    atLocalStack: run by local worker thread        
+    atLocalStack: no longer tracked by any list;
+    ownership transferred to local worker thread        
 ===================================================*/
 class Arena{
 public:
     Arena();
     std::string     stats();
     Task*           steal();
+    void            gc(); // stolen list
     Task*           takeFromReady();
     Task*           takeFromExec();
     void            reclaim(Task* executed) noexcept;
     void            setWorkerid(uint8_t id) noexcept{ 
         for(auto&t:tasks) t.setWorkerid(id);  
     }
-    // free --> exec (protected from stealers)
     template < class T, class... Args >  
     T*              emplaceToExec(FixSizedTask*parent, Args&&... args){
         FixSizedTask* addr=freeList.pop();
+        if(addr==nullptr){
+            gc();
+            addr=freeList.pop();
+        }
+        if(addr==nullptr){
+            return nullptr;
+        }
         T* task = new (addr) T(std::forward<Args>(args)...);
         FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
         t->setParentAndIncRefcnt(parent);
-        execList.push(t);
+        pushToExecList(t);
         return task;        
     }
-
-      // free --> exec (protected from stealers)
     template < class T, class... Args >  
     T*              emplaceToReady(FixSizedTask*parent, Args&&... args){
         FixSizedTask* addr=freeList.pop();
+        if(addr==nullptr){
+            gc();
+            addr=freeList.pop();
+        }
+        if(addr==nullptr){
+            return nullptr;
+        }       
         T* task = new (addr) T(std::forward<Args>(args)...);
         FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
         t->setParentAndIncRefcnt(parent);
-        readyList.push(t);
+        pushToReadyList(t);
         return task;        
     }  
 private:
+    void            pushToStolenList(FixSizedTask*t){
+        t->setLocation(FixSizedTask::atStolenList);
+        stolenList.push(t);
+    }
+    void            pushToFreeList(FixSizedTask*t){
+        t->setLocation(FixSizedTask::atFreeList);
+        freeList.push(t);
+    }
+    void            pushToReadyList(FixSizedTask*t){
+        t->setLocation(FixSizedTask::atReadyList);
+        readyList.push(t);
+    }
+    void            pushToExecList(FixSizedTask*t){
+        t->setLocation(FixSizedTask::atExecList);
+        execList.push(t);
+    }
     FixSizedTask    tasks[Options::ArenaSize];
-    Stack           freeList;
-    Stack           readyList;
-    Stack           execList;
-    Stack           stolenList;
+    PrivateStack    freeList; 
+    Stack           readyList;  
+    PrivateStack    execList; 
+    Stack           stolenList; 
 };
 
 }

@@ -10,6 +10,7 @@ class FixSizedTask;
 /*==================================================
  Stack is stack structure based on Moody Camel's
  lock-free ABA-free intrusive singly linked list.
+ PrivateStack is a thread-unsafe version of Stack.
 ===================================================*/
 
 class Stack
@@ -25,6 +26,15 @@ public:
     std::atomic<FixSizedTask*> stackHead;
 };
 
+class PrivateStack
+{
+public:
+    PrivateStack() : stackHead(nullptr) {}
+    void            push(FixSizedTask*);
+    FixSizedTask*   pop(); // Return nullptr on failure.
+private:
+    FixSizedTask*   stackHead;
+};
 
 
 

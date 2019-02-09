@@ -17,6 +17,7 @@ struct Options{
     static const uint32_t ArenaSize = 1024*1024;
     static const CPUYieldingStrategy YieldingStrategy= CPUYieldingStrategy::LazyBusySpin; 
     static const uint32_t CPUYieldingPauseTime = 100;
+    static const bool EnableSanityCheck = false;
 };
 
 }

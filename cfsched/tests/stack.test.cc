@@ -28,8 +28,24 @@ TEST_F(StackTest, basic) {
     for(int i=0;i<500;i++){
         auto t=stack.pop();
         EXPECT_EQ(t->meta.state, 500-i-1);
-    }}
+    }
+}
 
+
+TEST_F(StackTest, private) {
+    PrivateStack stack;
+    FixSizedTask tasks[500];
+    for(int i=0;i<500;i++){
+        tasks[i].meta.state=i;
+    }
+    for(int i=0;i<500;i++){
+        stack.push(&tasks[i]);
+    }
+    for(int i=0;i<500;i++){
+        auto t=stack.pop();
+        EXPECT_EQ(t->meta.state, 500-i-1);
+    }
+}
 
 TEST_F(StackTest, multithreaded) {
     Stack stack;
@@ -53,7 +69,7 @@ TEST_F(StackTest, multithreaded) {
                 if(bobo==nullptr){
                     duh+=" fails to get";
                 }else{
-                    duh+=" gets "+std::to_string(bobo->meta.state);
+                    duh+=" gets "+std::to_string(bobo->meta.state)+", refcnt="+std::to_string(bobo->meta.refcnt);
                 }
                 cfsched::println(duh);
                 cfsched::sleep(2);

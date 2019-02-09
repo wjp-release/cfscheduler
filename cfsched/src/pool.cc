@@ -45,7 +45,6 @@ void Pool::wakeAllSleepingWorkers()noexcept
     }
 }
 
-
 void Pool::start(){
     for(int i=0;i<workerNumber;i++){
         workers[i].id=i;

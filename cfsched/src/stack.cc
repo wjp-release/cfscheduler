@@ -70,4 +70,19 @@ FixSizedTask* Stack::pop()
 }
 
 
+void PrivateStack::push(FixSizedTask* node)
+{
+    node->meta.next.store(stackHead, std::memory_order_relaxed);
+    stackHead=node;
+}
+
+FixSizedTask* PrivateStack::pop()
+{
+    if(stackHead==nullptr) return nullptr;
+    FixSizedTask* next=stackHead->meta.next.load(std::memory_order_relaxed);
+    FixSizedTask* tmp=stackHead;
+    stackHead=next;
+    return tmp;
+}
+
 }
