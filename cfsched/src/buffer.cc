@@ -22,6 +22,7 @@ int Buffer::size() const noexcept{
 
 void Buffer::reclaim(Task* executed)noexcept{
     FixSizedTask& fixSizedTask=FixSizedTask::getFixSizedTaskReference(executed);
+    fixSizedTask.reset();
     fixSizedTask.setLocation(FixSizedTask::atBufferFreeArea);
 }
 

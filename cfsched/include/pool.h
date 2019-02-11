@@ -39,16 +39,16 @@ public:
     }
 
     template < class T, class... Args >  
-    T*                  emplaceExec(uint8_t index, Args&&... args)
+    T*                  emplaceExec(FixSizedTask*parent, Args&&... args)
     {
-        return workers[index].arena.emplaceToExec<T>(std::forward<Args>(args)...);
+        return workers[currentThreadIndex()].arena.emplaceToExec<T>(parent, std::forward<Args>(args)...);
     }
 
 
     template < class T, class... Args >  
-    T*                  emplaceReady(uint8_t index, Args&&... args)
+    T*                  emplaceReady(FixSizedTask*parent, Args&&... args)
     {
-        return workers[index].arena.emplaceToReady<T>(std::forward<Args>(args)...);
+        return workers[currentThreadIndex()].arena.emplaceToReady<T>(parent, std::forward<Args>(args)...);
     }
 
     void                wakeAllSleepingWorkers()noexcept;

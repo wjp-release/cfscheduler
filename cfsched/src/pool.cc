@@ -5,24 +5,20 @@
 namespace cfsched{
 
 Pool::Pool() noexcept :terminating(false), workerNumber(nr_cpu()){
-    println("pool constructing...");
     workers=new Worker[workerNumber];
     for(uint8_t i=0;i<workerNumber;i++){
         workers[i].setWorkerid(i);
     }
-    println("pool constructed！");
 }
 
 Pool::~Pool()
 {
-    println("pool terminating...");
     terminating=true;
     wakeAllSleepingWorkers();
     for(int i=0; i<workerNumber; i++){
         workers[i].tryJoin();
     }
     delete [] workers;
-    println("pool terminated!");
 }
 
 
@@ -51,7 +47,6 @@ void Pool::wakeAllSleepingWorkers()noexcept
 
 void Pool::start(){
     for(int i=0;i<workerNumber;i++){
-        println("starting worker"+std::to_string(i)+"...");
         workers[i].id=i;
         workers[i].workerThread=std::thread{
             [this,i]{
@@ -66,7 +61,6 @@ void Pool::start(){
                 }
             }
         };
-        println("worker"+std::to_string(i)+" started!");
     }
     #ifdef EnableInternalMonitor
     std::thread([this]{

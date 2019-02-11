@@ -15,7 +15,7 @@ class FixSizedTask{
 public:
     FixSizedTask(){}
     struct FixSizedTaskMeta{ // very compact meta data. 
-        FixSizedTaskMeta() : next(nullptr), refcnt(0) {}
+        FixSizedTaskMeta() : next(nullptr), refcnt(0), pendingcnt(0) {}
         std::atomic<FixSizedTask*>  next; // intrusive linked list node 
         std::atomic<uint32_t>       refcnt; // used ONLY to avoid ABA problem in CAS lock-free stacks
         std::atomic<uint32_t>       pendingcnt; // how many unfinished subtasks it still waits for
@@ -32,7 +32,6 @@ public:
         atExecList          = 2,
         atStolenList        = 3,
         atLocalStack        = 4,
-        //atStealerStack      = 5,
         atBufferFreeArea    = 6,
         atBufferReadyArea   = 7,
         atBufferStolenArea  = 8,
@@ -92,8 +91,12 @@ public:
     void        printState() noexcept{
         printf("state=0x%x\n", meta.state);
     }
-    void        reset() noexcept{ // reset data members before recycling into freelist again
-        //@todo
+    void        reset() noexcept{ 
+        meta.state=0;
+        meta.parent=nullptr;
+        meta.pendingcnt=0;
+        meta.refcnt=0;
+        meta.next=nullptr;
     }
     void        setParentAndIncRefcnt(FixSizedTask*p){
         meta.parent=p;
@@ -102,7 +105,7 @@ public:
     void        decreasePendingCount(){
         uint32_t pendingcnt= meta.pendingcnt.fetch_sub(1);
         if(pendingcnt==1){ // last child done
-            setIsDone(true);
+            setIsSynchronised(true);
         } 
     }
     void        tryDecreaseParentPendingCount(){
