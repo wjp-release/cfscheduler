@@ -3,7 +3,6 @@
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
-#include <cstdio>
 #include <string>
 #include "options.h"
 
@@ -13,7 +12,6 @@ class Task;
 
 class FixSizedTask{ 
 public:
-    FixSizedTask(){}
     struct FixSizedTaskMeta{ // very compact meta data. 
         FixSizedTaskMeta() : next(nullptr), refcnt(0), pendingcnt(0) {}
         std::atomic<FixSizedTask*>  next; // intrusive linked list node 
@@ -88,31 +86,13 @@ public:
     T&          taskReference() noexcept{
         return *reinterpret_cast<T*>(taskAddress);
     }
-    void        printState() noexcept{
-        printf("state=0x%x\n", meta.state);
-    }
-    void        reset() noexcept{ 
-        meta.state=0;
-        meta.parent=nullptr;
-        meta.pendingcnt=0;
-        meta.refcnt=0;
-        meta.next=nullptr;
-    }
-    void        setParentAndIncRefcnt(FixSizedTask*p){
-        meta.parent=p;
-        meta.pendingcnt.fetch_add(1);
-    }
-    void        decreasePendingCount(){
-        uint32_t pendingcnt= meta.pendingcnt.fetch_sub(1);
-        if(pendingcnt==1){ // last child done
-            setIsSynchronised(true);
-        } 
-    }
-    void        tryDecreaseParentPendingCount(){
-        if(meta.parent){
-            meta.parent->decreasePendingCount();
-        }
-    }
+    void        print() noexcept;
+    void        printState() noexcept;
+    void        reset() noexcept;
+    void        setParentAndIncRefcnt(FixSizedTask*p);
+    void        decreasePendingCount();
+    void        tryDecreaseParentPendingCount();
+
     // Static functions that convert user task to a library task.
     static FixSizedTaskMeta&getMetaReference(Task* task) noexcept{
         return reinterpret_cast<FixSizedTaskMeta*>(task)[-1];

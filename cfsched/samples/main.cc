@@ -14,7 +14,7 @@ public:
         val=ss.str();
     }
     virtual std::string stats() override{
-        return cfsched::Task::stats()+"<"+val+">";
+        return "Task<"+val+">";
     }
 protected:
     virtual void        compute() override{
@@ -29,15 +29,17 @@ class B : public cfsched::Task{
 public:
     B(int x) : x(x){}
     virtual std::string stats() override{
-        return cfsched::Task::stats()+"<"+std::to_string(x)+">";
+        return "Task<"+std::to_string(x)+">";
     }
 protected:
     virtual void        compute() override{
-        if(x>=10) return;
+        if(x>=10) goto ret;
         spawn<B>(x+1);
         spawn<B>(x+1);
+        cfsched::println(stats()+"'s pendingcnt="+std::to_string(cfsched::FixSizedTask::getFixSizedTaskPointer(this)->meta.pendingcnt));
+        cfsched::sleep(1000);
         localSync();
-        cfsched::println(std::to_string(x)+" computed!");
+ret:    cfsched::println(std::to_string(x)+" computed!");
     }
 private:
     int x;
@@ -57,9 +59,9 @@ void emplace_root(){
 
 void spawn_sync(){
     cfsched::Pool::instance().start();
-    B* b=cfsched::Pool::instance().emplaceRoot<B>(1);
+    B* b=cfsched::Pool::instance().emplaceRoot<B>(8);
     b->externalSync();
-    cfsched::println("b has been externally sync-ed");
+    cfsched::println("b has been externally synchronised");
 }
 
 void sum_1(){
@@ -79,7 +81,7 @@ void sum_i(){
 }
 
 int main() {
-    emplace_root();
+    spawn_sync();
 
     return 0;
 }
