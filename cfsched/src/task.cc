@@ -40,9 +40,6 @@ void Task::localSync()
     auto t=FixSizedTask::getFixSizedTaskPointer(this);
     while(!t->isSynchronised()){
         bool found=Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
-        if(!found){
-            println(Pool::instance().who()+stats()+"'s localSync found nothing to steal...");
-        }
     }
 }
 
@@ -58,7 +55,6 @@ void FixSizedTask::decreasePendingCount(){
 void FixSizedTask::setParentAndIncRefcnt(FixSizedTask*p){
     meta.parent=p;
     p->meta.pendingcnt.fetch_add(1);
-    p->print();
 }
 
 void FixSizedTask::print() noexcept{

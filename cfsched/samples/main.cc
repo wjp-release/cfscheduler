@@ -39,8 +39,7 @@ public:
 protected:
     virtual void        compute() override{
         if(level>=8) goto ret;
-        //assert(cfsched::FixSizedTask::getFixSizedTaskPointer(this)->meta.pendingcnt==0);
-        spawnPrivate<B>(level+1,value*2);
+        spawn<B>(level+1,value*2);
         spawnPrivate<B>(level+1,value*2+1);
         cfsched::println(cfsched::Pool::instance().who() +stats()+"'s pendingcnt="+std::to_string(cfsched::FixSizedTask::getFixSizedTaskPointer(this)->meta.pendingcnt));
         //cfsched::sleep(1000);
