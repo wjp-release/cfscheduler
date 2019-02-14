@@ -38,7 +38,10 @@ void Task::localSync()
 {
     auto t=FixSizedTask::getFixSizedTaskPointer(this);
     while(!t->isSynchronised()){
-        Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
+        bool found=Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
+        if(!found){
+            println(Pool::instance().who()+stats()+"'s localSync found nothing to steal...");
+        }
     }
 }
 

@@ -2,6 +2,7 @@
 #include "options.h"
 #include "worker.h"
 #include "utils.h"
+#include <string>
 
 namespace cfsched{
 
@@ -27,6 +28,7 @@ public:
         terminating=true;
     }
     void                start();
+    std::string         who() const noexcept; //debug
     uint8_t             currentThreadIndex()const noexcept;
     uint8_t             getWorkerNumber()const noexcept{
         return workerNumber;

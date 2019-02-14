@@ -27,22 +27,24 @@ private:
 
 class B : public cfsched::Task{
 public:
-    B(int x) : x(x){}
+    B(int lv, int val) :level(lv),value(val){}
     virtual std::string stats() override{
-        return "Task<"+std::to_string(x)+">";
+        return "<"+std::to_string(level)+","+std::to_string(value)+">";
     }
 protected:
     virtual void        compute() override{
-        if(x>=10) goto ret;
-        spawn<B>(x+1);
-        spawn<B>(x+1);
-        cfsched::println(stats()+"'s pendingcnt="+std::to_string(cfsched::FixSizedTask::getFixSizedTaskPointer(this)->meta.pendingcnt));
-        cfsched::sleep(1000);
+        if(level>=8) goto ret;
+        spawnPrivate<B>(level+1,value*2);
+        spawnPrivate<B>(level+1,value*2+1);
+        cfsched::println(cfsched::Pool::instance().who() +stats()+"'s pendingcnt="+std::to_string(cfsched::FixSizedTask::getFixSizedTaskPointer(this)->meta.pendingcnt));
+        //cfsched::sleep(1000);
         localSync();
-ret:    cfsched::println(std::to_string(x)+" computed!");
+ret:    cfsched::println(cfsched::Pool::instance().who()+stats()+" computed!");
     }
 private:
-    int x;
+    // <0,0>  <1,0~1> <2,0~3> <3,0~7> .. <n, 0~2^n-1>
+    int level; 
+    int value; 
 };
 void start(){
     cfsched::Pool::instance().start();
@@ -59,7 +61,7 @@ void emplace_root(){
 
 void spawn_sync(){
     cfsched::Pool::instance().start();
-    B* b=cfsched::Pool::instance().emplaceRoot<B>(8);
+    B* b=cfsched::Pool::instance().emplaceRoot<B>(0,0);
     b->externalSync();
     cfsched::println("b has been externally synchronised");
 }
