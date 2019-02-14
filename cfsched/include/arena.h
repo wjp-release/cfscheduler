@@ -47,8 +47,22 @@ public:
         if(addr==nullptr){
             return nullptr;
         }
-        T* task = new (addr) T(std::forward<Args>(args)...);
+        if(addr->meta.pendingcnt!=0){
+            std::cout<<"@@@@@@@@@@@@@@@@@@pop@@@@\n";
+        }
+        T* task = new (addr->taskPointer()) T(std::forward<Args>(args)...);
         FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
+        if(t->meta.pendingcnt!=0){
+            std::cout<<"duhhhhhhhhhhhhhhhhhhh\n";
+        }
+        std::cout<<"Now we create "<<task->stats();
+        t->print();
+     
+        // assert((void*)(t)==(void*)(addr));
+        if(t!=addr){
+            std::cout<<"t=="<<(uint64_t)t<<", addr="<<(uint64_t)addr<<std::endl;
+        }
+
         t->setParentAndIncRefcnt(parent);
         pushToExecList(t);
         return task;        

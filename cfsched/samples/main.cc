@@ -24,6 +24,11 @@ private:
     std::string val;
 };
 
+/*
+ spawnPrivate：导致pendingcnt偶尔不为2，这是为何？
+
+
+*/ 
 
 class B : public cfsched::Task{
 public:
@@ -34,6 +39,7 @@ public:
 protected:
     virtual void        compute() override{
         if(level>=8) goto ret;
+        //assert(cfsched::FixSizedTask::getFixSizedTaskPointer(this)->meta.pendingcnt==0);
         spawnPrivate<B>(level+1,value*2);
         spawnPrivate<B>(level+1,value*2+1);
         cfsched::println(cfsched::Pool::instance().who() +stats()+"'s pendingcnt="+std::to_string(cfsched::FixSizedTask::getFixSizedTaskPointer(this)->meta.pendingcnt));

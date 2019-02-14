@@ -11,6 +11,9 @@ std::string Arena::stats(){
 Arena::Arena(){
     for(auto& t:tasks){
         pushToFreeList(&t);
+        if(t.meta.pendingcnt!=0){
+            std::cout<<",.....................,,,,,,,.\n";
+        }
     } 
 }
 

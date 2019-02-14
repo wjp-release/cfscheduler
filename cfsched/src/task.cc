@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdio>
 #include "utils.h"
+#include "pool.h"
 
 namespace cfsched{
 
@@ -57,10 +58,11 @@ void FixSizedTask::decreasePendingCount(){
 void FixSizedTask::setParentAndIncRefcnt(FixSizedTask*p){
     meta.parent=p;
     p->meta.pendingcnt.fetch_add(1);
+    p->print();
 }
 
 void FixSizedTask::print() noexcept{
-    printf("pendingcnt=%d, recnt=%d, next=%lld, parent=%lld\n", meta.pendingcnt.load(), meta.refcnt.load(),(long long)meta.next.load(),(long long)meta.parent);
+    printf("%s's pendingcnt=%d, recnt=%d, next=%lld, parent=%lld\n", (Pool::instance().who()+taskPointer()->stats()).c_str(), meta.pendingcnt.load(), meta.refcnt.load(),(long long)meta.next.load(),(long long)meta.parent);
 }
 
 void FixSizedTask::printState() noexcept{
@@ -70,9 +72,9 @@ void FixSizedTask::printState() noexcept{
 void FixSizedTask::reset() noexcept{ 
     meta.state=0;
     meta.parent=nullptr;
-    meta.pendingcnt=0;
-    meta.refcnt=0;
-    meta.next=nullptr;
+    meta.pendingcnt.store(0);
+    meta.refcnt.store(0);
+    meta.next.store(0);
 }
 
 void FixSizedTask::tryDecreaseParentPendingCount(){
