@@ -2,6 +2,7 @@
 
 #include <string>
 #include "pool.h"
+#include "profiler.h"
 
 namespace cfsched{
     
@@ -33,10 +34,16 @@ protected:
     template < class T, class... Args >  
     T*                  spawnPrivate(Args&&... args)
     {
+    #ifdef EnableProfiling
+        Profiler::instance().spawnedTaskCount++;
+    #endif
         return Pool::instance().emplaceExec<T>(FixSizedTask::getFixSizedTaskPointer(this), std::forward<Args>(args)...);
     }
     template < class T, class... Args >  
     T*                  spawn(Args&&... args){
+    #ifdef EnableProfiling
+        Profiler::instance().spawnedTaskCount++;
+    #endif
         return Pool::instance().emplaceReady<T>(FixSizedTask::getFixSizedTaskPointer(this),std::forward<Args>(args)...);
     }
 };

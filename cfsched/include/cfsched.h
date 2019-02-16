@@ -2,6 +2,7 @@
 
 #include "task_logical.h"
 #include "parallel_sum.h"
+#include "profiler.h"
 
 namespace cfsched{
 

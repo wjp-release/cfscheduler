@@ -51,6 +51,8 @@ void Pool::wakeAllSleepingWorkers()noexcept
 }
 
 void Pool::start(){
+    if(started) return;
+    started=true;
     for(int i=0;i<workerNumber;i++){
         workers[i].id=i;
         workers[i].workerThread=std::thread{

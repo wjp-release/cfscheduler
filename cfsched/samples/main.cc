@@ -24,12 +24,6 @@ private:
     std::string val;
 };
 
-/*
- spawnPrivate：导致pendingcnt偶尔不为2，这是为何？
-
-
-*/ 
-
 class B : public cfsched::Task{
 public:
     B(int lv, int val) :level(lv),value(val){}
@@ -72,23 +66,41 @@ void spawn_sync(){
 }
 
 void sum_1(){
+    cfsched::Pool::instance().start();
     std::vector<int> arr;
     for(int i=0;i<100;i++){
         arr.push_back(1);
     }
-    cfsched::parallel_sum<10>(arr.data(),arr.size());
+    int res=cfsched::parallel_sum<10>(arr.data(),arr.size());
+    std::cout<<"res="<<res<<std::endl;
 }
 
 void sum_i(){
+    cfsched::Pool::instance().start();
     std::vector<int> arr;
     for(int i=0;i<100;i++){
         arr.push_back(i);
     }
-    cfsched::parallel_sum<10>(arr.data(),arr.size());
+    int res=cfsched::parallel_sum<10>(arr.data(),arr.size());
+    std::cout<<"res="<<res<<std::endl;
+}
+
+void large_sum(){
+    cfsched::time_point start=cfsched::now();
+    cfsched::Pool::instance().start();
+    std::vector<int> arr;
+    for(int i=0;i<10000;i++){
+        arr.push_back(1);
+    }
+    std::cout<<"Everything prepared, "<<cfsched::ms_elapsed_count(start)<<" ms elapsed.";
+    start=cfsched::now();
+    int res=cfsched::parallel_sum<10>(arr.data(),arr.size());
+    std::cout<<"res="<<res<<", "<<cfsched::ms_elapsed_count(start)<<" ms elapsed.";
+    cfsched::Profiler::instance().print();
 }
 
 int main() {
-    spawn_sync();
+    large_sum();
 
     return 0;
 }

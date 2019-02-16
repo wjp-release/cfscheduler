@@ -1,7 +1,8 @@
 #pragma once
 #include <cstdint>
 
-#define EnableInternalMonitor
+//#define EnableInternalMonitor
+#define EnableProfiling
 
 namespace cfsched{
 

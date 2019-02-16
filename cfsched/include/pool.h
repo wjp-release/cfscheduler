@@ -58,9 +58,10 @@ protected:
 	Pool() noexcept;
     ~Pool();
 private:
-    volatile bool       terminating;  
+    volatile bool       terminating=false;  
     Worker*             workers;
     uint8_t             workerNumber;
+    bool                started=false;
 };
 
 

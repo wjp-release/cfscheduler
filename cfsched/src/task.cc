@@ -4,10 +4,15 @@
 #include <cstdio>
 #include "utils.h"
 #include "pool.h"
+#include "profiler.h"
 
 namespace cfsched{
 
+
 void Task::execute(){
+#ifdef EnableProfiling
+    Profiler::instance().executedTaskCount++;
+#endif
     compute();
     auto t=FixSizedTask::getFixSizedTaskPointer(this);
     t->setIsDone(true);
@@ -39,7 +44,7 @@ void Task::localSync()
 {
     auto t=FixSizedTask::getFixSizedTaskPointer(this);
     while(!t->isSynchronised()){
-        bool found=Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
+        Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
     }
 }
 

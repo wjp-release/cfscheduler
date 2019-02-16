@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: cfsched
-# Configuration: Debug
+# Configuration: Release
 # =============================================================================
 
 #############################################
@@ -73,43 +73,43 @@ build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
 build cmake_object_order_depends_target_cfsched: phony
 build src/CMakeFiles/cfsched.dir/arena.cc.o: CXX_COMPILER__cfsched ../src/arena.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/arena.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/buffer.cc.o: CXX_COMPILER__cfsched ../src/buffer.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/buffer.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/pool.cc.o: CXX_COMPILER__cfsched ../src/pool.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/pool.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/stack.cc.o: CXX_COMPILER__cfsched ../src/stack.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/stack.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/task.cc.o: CXX_COMPILER__cfsched ../src/task.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/task.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/utils.cc.o: CXX_COMPILER__cfsched ../src/utils.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/utils.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/worker.cc.o: CXX_COMPILER__cfsched ../src/worker.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/worker.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
@@ -122,7 +122,7 @@ build src/CMakeFiles/cfsched.dir/worker.cc.o: CXX_COMPILER__cfsched ../src/worke
 # Link the static library src/libcfsched.a
 
 build src/libcfsched.a: CXX_STATIC_LIBRARY_LINKER__cfsched src/CMakeFiles/cfsched.dir/arena.cc.o src/CMakeFiles/cfsched.dir/buffer.cc.o src/CMakeFiles/cfsched.dir/pool.cc.o src/CMakeFiles/cfsched.dir/stack.cc.o src/CMakeFiles/cfsched.dir/task.cc.o src/CMakeFiles/cfsched.dir/utils.cc.o src/CMakeFiles/cfsched.dir/worker.cc.o
-  LANGUAGE_COMPILE_FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2
+  LANGUAGE_COMPILE_FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -162,7 +162,7 @@ build samples/rebuild_cache: phony samples/CMakeFiles/rebuild_cache.util
 build cmake_object_order_depends_target_sample: phony || cmake_object_order_depends_target_cfsched
 build samples/CMakeFiles/sample.dir/main.cc.o: CXX_COMPILER__sample ../samples/main.cc || cmake_object_order_depends_target_sample
   DEP_FILE = samples/CMakeFiles/sample.dir/main.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = samples/CMakeFiles/sample.dir
   OBJECT_FILE_DIR = samples/CMakeFiles/sample.dir
@@ -175,7 +175,7 @@ build samples/CMakeFiles/sample.dir/main.cc.o: CXX_COMPILER__sample ../samples/m
 # Link the executable samples/sample
 
 build samples/sample: CXX_EXECUTABLE_LINKER__sample samples/CMakeFiles/sample.dir/main.cc.o | src/libcfsched.a || src/libcfsched.a
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
   LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src src/libcfsched.a -lpthread
   LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src
   OBJECT_DIR = samples/CMakeFiles/sample.dir

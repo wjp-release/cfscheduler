@@ -14,7 +14,7 @@ public:
     volatile int* sum;
     ParallelSum(const int* b, const int* e, volatile int* s):beg(b), end(e), sum(s){}
     std::string stats() override{
-		return Task::stats()+"("+std::to_string((uint64_t)(end-beg))+")";
+		return std::to_string((uint64_t)(end-beg));
 	}
 	void compute() override{
         auto len = end - beg;
@@ -28,7 +28,8 @@ public:
         spawn<ParallelSum>(mid,end,&x);
 		spawnPrivate<ParallelSum>(beg,mid,&y);
         localSync();
-        *sum=x+y;
+        *sum=x+y;       
+        //奇怪的bug：这里不加sleep或println会导致release版死锁，导致debug版core dumped。sleep(1)有时好有时坏。。
         println(">> sum="+std::to_string(x)+"+"+std::to_string(y));
     }
 };
