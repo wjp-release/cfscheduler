@@ -43,8 +43,6 @@ public:
         if(addr==nullptr){
             gc();
             addr=freeList.pop();
-        }else{
-            std::cout<<".";
         }
         if(addr==nullptr){
             println("still no space!");
@@ -62,8 +60,6 @@ public:
         if(addr==nullptr){
             gc();
             addr=freeList.pop();
-        }else{
-            std::cout<<".";
         }
         if(addr==nullptr){
             println("still no space!");
