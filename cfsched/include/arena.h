@@ -41,6 +41,8 @@ public:
     T*              emplaceToExec(FixSizedTask*parent, Args&&... args){
         FixSizedTask* addr=freeList.pop();
         if(addr==nullptr){
+            println("freelist size="+std::to_string(freeList.size()));
+            assert(false&&"gc untested!");
             gc();
             addr=freeList.pop();
         }
@@ -58,6 +60,8 @@ public:
     T*              emplaceToReady(FixSizedTask*parent, Args&&... args){
         FixSizedTask* addr=freeList.pop();
         if(addr==nullptr){
+            println("freelist size="+std::to_string(freeList.size()));
+            assert(false&&"gc untested!");
             gc();
             addr=freeList.pop();
         }

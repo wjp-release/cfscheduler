@@ -91,6 +91,7 @@ void PrivateStack::push(FixSizedTask* node)
 {
     node->meta.next.store(stackHead, std::memory_order_relaxed);
     stackHead=node;
+    count++;
 }
 
 FixSizedTask* PrivateStack::pop()
@@ -99,6 +100,7 @@ FixSizedTask* PrivateStack::pop()
     FixSizedTask* next=stackHead->meta.next.load(std::memory_order_relaxed);
     FixSizedTask* tmp=stackHead;
     stackHead=next;
+    count--;
     return tmp;
 }
 
@@ -118,5 +120,21 @@ std::string PrivateStack::stats(){
     duh+=")[count="+std::to_string(count)+"]";
     return duh;
 }
+
+ int PrivateStack::size(){ //slow, debugging
+    auto pos=stackHead;
+    int c=0;
+    while(pos!=nullptr){
+        c++;
+        pos=pos->meta.next.load();
+    }
+    if(count!=c){
+        //奇怪，这里出现不等。pos为nullptr，而事实上这个stack却很大。难道哪里多线程访问了它吗？
+        println("c="+std::to_string(c)+", count="+std::to_string(count));
+    }
+    assert(count==c);
+    return c;
+}
+
 
 }

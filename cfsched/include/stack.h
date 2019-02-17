@@ -34,8 +34,10 @@ public:
     PrivateStack() : stackHead(nullptr) {}
     void            push(FixSizedTask*);
     FixSizedTask*   pop(); //return nullptr on failure.
+    int             size(); 
     std::string     stats();//debugging stats
 private:
+    int             count=0;
     FixSizedTask*   stackHead;
 };
 
