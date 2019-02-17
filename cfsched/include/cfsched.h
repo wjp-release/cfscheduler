@@ -29,7 +29,7 @@ T* sched(Args&&... args)
 
 template <int GrainSize>
 int parallel_sum(const int* arr, size_t n){
-    volatile int sum;
+    int sum;
 	ParallelSum<GrainSize>* task=Pool::instance().emplaceRoot<ParallelSum<GrainSize>>(arr, arr+n, &sum);
     task->externalSync(); 
     return sum;

@@ -1,5 +1,6 @@
 #include "arena.h"
 #include <sstream>
+#include "utils.h"
 namespace cfsched{
 
 std::string Arena::stats(){
@@ -36,6 +37,7 @@ Task* Arena::takeFromExec(){
 }
 
 void Arena::gc(){
+    println("garbage collection！");
     PrivateStack tmp;
     FixSizedTask* task;
     int patience=3;

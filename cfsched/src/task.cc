@@ -46,6 +46,7 @@ void Task::localSync()
     while(!t->isSynchronised()){
         Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
     }
+    assert(t->isSynchronised());
 }
 
 /*=====================================================*/
@@ -53,7 +54,7 @@ void Task::localSync()
 void FixSizedTask::decreasePendingCount(){
     uint32_t pendingcnt= meta.pendingcnt.fetch_sub(1);
     if(pendingcnt==1){ // last child done
-        setIsSynchronised(true);
+        setIsSynchronised();
     } 
 }
 
@@ -76,6 +77,7 @@ void FixSizedTask::reset() noexcept{
     meta.pendingcnt.store(0);
     meta.refcnt.store(0);
     meta.next.store(0);
+    meta.synced.store(false);
 }
 
 void FixSizedTask::tryDecreaseParentPendingCount(){

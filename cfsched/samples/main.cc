@@ -92,10 +92,10 @@ void large_sum(){
     for(int i=0;i<10000;i++){
         arr.push_back(1);
     }
-    std::cout<<"Everything prepared, "<<cfsched::ms_elapsed_count(start)<<" ms elapsed.";
+    std::cout<<"Everything prepared, "<<cfsched::ms_elapsed_count(start)<<" ms elapsed.\n";
     start=cfsched::now();
     int res=cfsched::parallel_sum<10>(arr.data(),arr.size());
-    std::cout<<"res="<<res<<", "<<cfsched::ms_elapsed_count(start)<<" ms elapsed.";
+    std::cout<<"res="<<res<<", "<<cfsched::ms_elapsed_count(start)<<" ms elapsed.\n";
     cfsched::Profiler::instance().print();
 }
 

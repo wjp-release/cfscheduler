@@ -43,8 +43,11 @@ public:
         if(addr==nullptr){
             gc();
             addr=freeList.pop();
+        }else{
+            std::cout<<".";
         }
         if(addr==nullptr){
+            println("still no space!");
             return nullptr;
         }
         T* task = new (addr->taskPointer()) T(std::forward<Args>(args)...);
@@ -59,8 +62,11 @@ public:
         if(addr==nullptr){
             gc();
             addr=freeList.pop();
+        }else{
+            std::cout<<".";
         }
         if(addr==nullptr){
+            println("still no space!");
             return nullptr;
         }       
         T* task = new (addr->taskPointer()) T(std::forward<Args>(args)...);

@@ -13,15 +13,15 @@ class Task;
 class FixSizedTask{ 
 public:
     struct FixSizedTaskMeta{ // very compact meta data. 
-        FixSizedTaskMeta() : next(nullptr), refcnt(0), pendingcnt(0) {}
+        FixSizedTaskMeta() : next(nullptr), refcnt(0), pendingcnt(0), synced(false) {}
         std::atomic<FixSizedTask*>  next; // intrusive linked list node 
         std::atomic<uint32_t>       refcnt; // used ONLY to avoid ABA problem in CAS lock-free stacks
         std::atomic<uint32_t>       pendingcnt; // how many unfinished subtasks it still waits for
         FixSizedTask*               parent = nullptr; // parent task
-        uint32_t state = 0;
+        volatile uint32_t           state = 0;
+        std::atomic<bool>           synced;
         static const uint32_t       locationMask=0x0000000f;
         static const uint32_t       workerIDMask=0x000000f0;
-        static const uint32_t       isSynchronisedMask=0x00000100;
         static const uint32_t       isDoneMask=0x00000200;
     };
     enum TaskLocation : uint8_t{
@@ -41,7 +41,7 @@ public:
         return (meta.state&meta.workerIDMask)>>4;
     }
     bool        isSynchronised() const noexcept{ 
-        return (meta.state&meta.isSynchronisedMask)==meta.isSynchronisedMask;
+        return meta.synced.load(); // seq_cst better at debugging than acquire
     }
     bool        isDone() const noexcept{ 
         return (meta.state&meta.isDoneMask)==meta.isDoneMask;
@@ -57,12 +57,8 @@ public:
             meta.state&=(~meta.isDoneMask);
         }
     }
-    void        setIsSynchronised(bool done) noexcept{
-        if(done){
-            meta.state|=meta.isSynchronisedMask;
-        }else{
-            meta.state&=(~meta.isSynchronisedMask);
-        }
+    void        setIsSynchronised() noexcept{
+        meta.synced.store(true); // seq_cst better at debugging than release
     }
     void        setLocation(TaskLocation location) noexcept{
         meta.state=(location&meta.locationMask)|(meta.state&~meta.locationMask);
