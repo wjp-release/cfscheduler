@@ -28,9 +28,15 @@ public:
         spawn<ParallelSum>(mid,end,&x);
 		spawnPrivate<ParallelSum>(beg,mid,&y);
         localSync();
-        *sum=x+y;       
+        *sum=x+y;    
+        if(x<0) println("x="+std::to_string(x));
+        if(y<0) println("y="+std::to_string(y));
+        if(*sum<0) println("sum="+std::to_string(*sum));
+        assert(x>0);
+        assert(y>0);
+        assert(*sum>0);
         //奇怪的bug：这里不加sleep或println会导致release版死锁，导致debug版core dumped。sleep(1)有时好有时坏。。
-        println(">> sum="+std::to_string(x)+"+"+std::to_string(y));
+        //println(">> sum="+std::to_string(x)+"+"+std::to_string(y));
     }
 };
 
