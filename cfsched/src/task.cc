@@ -43,13 +43,15 @@ void Task::externalSync()
 void Task::localSync()
 {
     auto t=FixSizedTask::getFixSizedTaskPointer(this);
+    if(t->meta.pendingcnt.load()!=2 && t->meta.pendingcnt.load()!=1){
+        t->print("localSync() entry: ");
+    }
     while(!t->meta.synced.load()){
         Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
     }
     assert(t->meta.synced.load());
     if(t->meta.pendingcnt.load()!=0){
-        println("localSync(): pendingcnt="+std::to_string(t->meta.pendingcnt.load())+", refcnt="+std::to_string(t->meta.refcnt.load()));
-
+        t->print("localSync() end: ");
     }
 }
 
@@ -70,19 +72,17 @@ void FixSizedTask::setParentAndIncRefcnt(FixSizedTask*p){
 }
 
 void FixSizedTask::assertBeforeSpawn(){
-    println("before spawn: location="+std::to_string(location())+", isDone="+std::to_string(isDone())+", workerid="+std::to_string(workerid())+", pendincnt="+std::to_string( meta.pendingcnt.load()));
-    //assert(meta.pendingcnt.load()==0);
-    assert(meta.synced.load()==false);
+    if(meta.pendingcnt.load()!=0 || meta.synced.load()==true) print("before spawn: ");
 }
 
 void FixSizedTask::assertAfterSync(){
-    println("after sync: location="+std::to_string(location())+", isDone="+std::to_string(isDone())+", workerid="+std::to_string(workerid())+", pendincnt="+std::to_string( meta.pendingcnt.load()));
-    //assert(meta.pendingcnt.load()==0);
-    assert(meta.synced.load()==true);
+    if(meta.pendingcnt.load()!=0|| meta.synced.load()==false) print("after sync: ");
 }
 
-void FixSizedTask::print() noexcept{
-    printf("%s's pendingcnt=%d, recnt=%d, next=%lld, parent=%lld\n", (Pool::instance().who()+taskPointer()->stats()).c_str(), meta.pendingcnt.load(), meta.refcnt.load(),(long long)meta.next.load(),(long long)meta.parent);
+void FixSizedTask::print(const std::string& prefix) noexcept{
+    println(prefix+"location="+std::to_string(location())+", isDone="+std::to_string(isDone())+", workerid="+std::to_string(workerid())+", pendincnt="+std::to_string( meta.pendingcnt.load())+", refcnt="+std::to_string(meta.refcnt.load())
+    +", synced="+std::to_string(meta.synced.load())
+    +", executorid="+Pool::instance().who());
 }
 
 void FixSizedTask::printState() noexcept{

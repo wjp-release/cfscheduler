@@ -85,7 +85,7 @@ public:
     T&          taskReference() noexcept{
         return *reinterpret_cast<T*>(taskAddress);
     }
-    void        print() noexcept;
+    void        print(const std::string& prefix) noexcept;
     void        printState() noexcept;
     void        reset() noexcept;
     void        setParentAndIncRefcnt(FixSizedTask*p);

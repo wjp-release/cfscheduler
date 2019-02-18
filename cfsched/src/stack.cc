@@ -98,10 +98,10 @@ void PrivateStack::push(FixSizedTask* node)
 
 FixSizedTask* PrivateStack::pop()
 {
-    uint8_t tid=Pool::instance().currentThreadIndex();
-    if(tid!=workerid){
-       println("PrivateStack::pop(): worker id="+std::to_string(workerid)+", current tid="+std::to_string(tid)); 
-    } 
+    // uint8_t tid=Pool::instance().currentThreadIndex();
+    // if(tid!=workerid){
+    //    println("PrivateStack::pop(): worker id="+std::to_string(workerid)+", current tid="+std::to_string(tid)); 
+    // } 
     if(stackHead==nullptr) return nullptr;
     FixSizedTask* next=stackHead->meta.next.load();
     //FixSizedTask* next=stackHead->meta.next.load(std::memory_order_relaxed);
@@ -113,10 +113,10 @@ FixSizedTask* PrivateStack::pop()
 
 std::string PrivateStack::stats(){
     std::string duh="Stack(";
-    int count=0;
+    int c=0;
     FixSizedTask* pos = stackHead;
     while(pos!=nullptr){
-        count++;
+        c++;
         if(pos->location()!=FixSizedTask::atFreeList){
             duh+=pos->taskPointer()->stats()+" ";
             pos = pos->meta.next.load(std::memory_order_relaxed);
@@ -124,7 +124,7 @@ std::string PrivateStack::stats(){
             duh+="<empty> ";
         }
     }
-    duh+=")[count="+std::to_string(count)+"]";
+    duh+=")[count="+std::to_string(c)+"]";
     return duh;
 }
 
@@ -143,5 +143,38 @@ std::string PrivateStack::stats(){
     return c;
 }
 
+void BlockingStack::push(FixSizedTask* node)
+{
+    std::lock_guard<std::mutex> lk(mtx);
+    node->meta.next.store(stackHead);
+    stackHead=node;
+}
+
+FixSizedTask* BlockingStack::pop()
+{
+    std::lock_guard<std::mutex> lk(mtx);
+    if(stackHead==nullptr) return nullptr;
+    FixSizedTask* next=stackHead->meta.next.load();
+    FixSizedTask* tmp=stackHead;
+    stackHead=next;
+    return tmp;
+}
+
+std::string BlockingStack::stats(){
+    std::string duh="Stack(";
+    int count=0;
+    FixSizedTask* pos = stackHead;
+    while(pos!=nullptr){
+        count++;
+        if(pos->location()!=FixSizedTask::atFreeList){
+            duh+=pos->taskPointer()->stats()+" ";
+            pos = pos->meta.next.load(std::memory_order_relaxed);
+        }else{
+            duh+="<empty> ";
+        }
+    }
+    duh+=")[count="+std::to_string(count)+"]";
+    return duh;
+}
 
 }

@@ -58,7 +58,7 @@ uint8_t Pool::currentThreadIndex()const noexcept
 
 std::string Pool::who() const noexcept
 {
-    return "worker"+std::to_string(cfsched::Pool::instance().currentThreadIndex())+": ";
+    return "worker"+std::to_string(cfsched::Pool::instance().currentThreadIndex())+" ";
 }
 
 void Pool::wakeAllSleepingWorkers()noexcept

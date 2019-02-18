@@ -20,7 +20,7 @@ public:
 	}
 	void compute() override{
         auto t=FixSizedTask::getFixSizedTaskPointer(this);
-        t->assertBeforeSpawn();
+        t->assertBeforeSpawn(); //奇怪，只要一打印t的各项状态，立刻就呈现正确的同步，观察则坍缩。不观察才出bug。要是不打印立刻就有大概率出错。
         auto len = end - beg;
         if (len < GrainSize){
             *sum = std::accumulate(beg, end, 0);
@@ -32,20 +32,11 @@ public:
         int x=-123;
         int y=-123;
         assert(t->taskPointer()==this);
-        if(t->meta.pendingcnt.load()!=0){
-            println("before spawn: pendingcnt="+std::to_string(t->meta.pendingcnt.load())+", refcnt="+std::to_string(t->meta.refcnt.load()));
-        }
         //sleep(100);
         spawnPrivate<ParallelSum>(mid,end,&x);
 		spawn<ParallelSum>(beg,mid,&y);
-        if(t->meta.pendingcnt!=2&&t->meta.pendingcnt!=1){
-            println("between spawn and sync: pendingcnt="+std::to_string(t->meta.pendingcnt.load())+", refcnt="+std::to_string(t->meta.refcnt.load()));
-        }
         localSync();
-        //sync
-        if(t->meta.pendingcnt!=0){
-            println("after sync: pendingcnt="+std::to_string(t->meta.pendingcnt.load())+", refcnt="+std::to_string(t->meta.refcnt.load()));
-        }
+        t->assertAfterSync();
         assert(t->meta.synced==true);
         *sum=x+y;    
         if(x<0) println("x="+std::to_string(x));

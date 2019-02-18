@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <atomic>
 #include <string>
+#include <mutex>
 
 namespace cfsched{
 
@@ -26,6 +27,18 @@ public:
     static const uint32_t REFS_MASK = 0x7FFFFFFF;
     static const uint32_t SHOULD_BE_ON_FREELIST = 0x80000000;
     std::atomic<FixSizedTask*> stackHead;
+};
+
+class BlockingStack
+{
+public:
+    BlockingStack() : stackHead(nullptr) {}
+    void            push(FixSizedTask*);
+    FixSizedTask*   pop(); //return nullptr on failure.
+    std::string     stats(); //debugging stats
+  private:
+    FixSizedTask*   stackHead;
+    std::mutex      mtx;
 };
 
 class PrivateStack
