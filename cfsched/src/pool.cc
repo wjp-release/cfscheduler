@@ -4,10 +4,28 @@
 
 namespace cfsched{
 
-Pool::Pool() noexcept :terminating(false), workerNumber(nr_cpu()){
+Pool::Pool() noexcept :terminating(false), started(false), workerNumber(nr_cpu()){
     workers=new Worker[workerNumber];
     for(uint8_t i=0;i<workerNumber;i++){
         workers[i].setWorkerid(i);
+        workers[i].workerThread=std::thread{
+            [this,i]{
+                while(!started){ 
+                    if(terminating) return;
+                }
+                println("started!");
+                while(!terminating){
+                    try{
+                        workers[i].findAndRunATaskOrYield();
+                    }catch(std::exception& e){ 
+                        println("Worker"+std::to_string(i)+e.what());
+                    }catch(...){
+                        println("Worker"+std::to_string(i)+" unknown exception");
+                    }
+                }
+                println("terminated!");
+            }
+        };
     }
 }
 
@@ -53,22 +71,6 @@ void Pool::wakeAllSleepingWorkers()noexcept
 void Pool::start(){
     if(started) return;
     started=true;
-    for(int i=0;i<workerNumber;i++){
-        workers[i].id=i;
-        workers[i].workerThread=std::thread{
-            [this,i]{
-                while(!terminating){
-                    try{
-                        workers[i].findAndRunATaskOrYield();
-                    }catch(std::exception& e){ 
-                        println("Worker"+std::to_string(i)+e.what());
-                    }catch(...){
-                        println("Worker"+std::to_string(i)+" unknown exception");
-                    }
-                }
-            }
-        };
-    }
     #ifdef EnableInternalMonitor
     std::thread([this]{
         while(true){

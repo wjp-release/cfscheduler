@@ -35,7 +35,9 @@ public:
     Task*           takeFromExec();
     void            reclaim(Task* executed) noexcept;
     void            setWorkerid(uint8_t id) noexcept{ 
-        for(auto&t:tasks) t.setWorkerid(id);  
+        for(auto&t:tasks) t.setWorkerid(id); 
+        freeList.setid(id);
+        execList.setid(id);
     }
     template < class T, class... Args >  
     T*              emplaceToExec(FixSizedTask*parent, Args&&... args){
@@ -53,6 +55,8 @@ public:
         T* task = new (addr->taskPointer()) T(std::forward<Args>(args)...);
         FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
         t->setParentAndIncRefcnt(parent);
+        assert(t->meta.pendingcnt.load()==0);
+        assert(t->meta.synced.load()==false);
         pushToExecList(t);
         return task;        
     }
@@ -72,6 +76,8 @@ public:
         T* task = new (addr->taskPointer()) T(std::forward<Args>(args)...);
         FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
         t->setParentAndIncRefcnt(parent);
+        assert(t->meta.pendingcnt.load()==0);
+        assert(t->meta.synced.load()==false);
         pushToReadyList(t);
         return task;        
     }  

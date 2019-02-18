@@ -4,6 +4,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <string>
+#include <cassert>
 #include "options.h"
 
 namespace cfsched{
@@ -40,6 +41,8 @@ public:
     uint8_t     workerid() const noexcept{ 
         return (meta.state&meta.workerIDMask)>>4;
     }
+    void        assertBeforeSpawn();
+    void        assertAfterSync();
     bool        isSynchronised() const noexcept{ 
         return meta.synced.load(); // seq_cst better at debugging than acquire
     }

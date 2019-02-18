@@ -61,7 +61,7 @@ private:
     volatile bool       terminating=false;  
     Worker*             workers;
     uint8_t             workerNumber;
-    bool                started=false;
+    volatile bool       started=false;
 };
 
 

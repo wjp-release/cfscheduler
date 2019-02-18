@@ -43,10 +43,14 @@ void Task::externalSync()
 void Task::localSync()
 {
     auto t=FixSizedTask::getFixSizedTaskPointer(this);
-    while(!t->isSynchronised()){
+    while(!t->meta.synced.load()){
         Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
     }
-    assert(t->isSynchronised());
+    assert(t->meta.synced.load());
+    if(t->meta.pendingcnt.load()!=0){
+        println("localSync(): pendingcnt="+std::to_string(t->meta.pendingcnt.load())+", refcnt="+std::to_string(t->meta.refcnt.load()));
+
+    }
 }
 
 /*=====================================================*/
@@ -55,12 +59,26 @@ void FixSizedTask::decreasePendingCount(){
     uint32_t pendingcnt= meta.pendingcnt.fetch_sub(1);
     if(pendingcnt==1){ // last child done
         setIsSynchronised();
+        assert(meta.pendingcnt.load()==0 && "now pendingcnt should be zero");
+        assert(meta.synced.load()==true);
     } 
 }
 
 void FixSizedTask::setParentAndIncRefcnt(FixSizedTask*p){
     meta.parent=p;
     p->meta.pendingcnt.fetch_add(1);
+}
+
+void FixSizedTask::assertBeforeSpawn(){
+    println("before spawn: location="+std::to_string(location())+", isDone="+std::to_string(isDone())+", workerid="+std::to_string(workerid())+", pendincnt="+std::to_string( meta.pendingcnt.load()));
+    //assert(meta.pendingcnt.load()==0);
+    assert(meta.synced.load()==false);
+}
+
+void FixSizedTask::assertAfterSync(){
+    println("after sync: location="+std::to_string(location())+", isDone="+std::to_string(isDone())+", workerid="+std::to_string(workerid())+", pendincnt="+std::to_string( meta.pendingcnt.load()));
+    //assert(meta.pendingcnt.load()==0);
+    assert(meta.synced.load()==true);
 }
 
 void FixSizedTask::print() noexcept{

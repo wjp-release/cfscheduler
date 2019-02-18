@@ -35,9 +35,13 @@ public:
     void            push(FixSizedTask*);
     FixSizedTask*   pop(); //return nullptr on failure.
     int             size(); 
+    void            setid(uint8_t id){
+        workerid=id;
+    }
     std::string     stats();//debugging stats
 private:
     int             count=0;
+    uint8_t         workerid=0;
     FixSizedTask*   stackHead;
 };
 

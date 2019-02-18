@@ -3,6 +3,8 @@
 #include "utils.h"
 #include "task_logical.h"
 #include <numeric>
+#include <atomic>
+#include <cassert>
 
 namespace cfsched{
 
@@ -17,18 +19,34 @@ public:
 		return std::to_string((uint64_t)(end-beg));
 	}
 	void compute() override{
+        auto t=FixSizedTask::getFixSizedTaskPointer(this);
+        t->assertBeforeSpawn();
         auto len = end - beg;
         if (len < GrainSize){
             *sum = std::accumulate(beg, end, 0);
+            assert(t->meta.pendingcnt.load()==0);
             assert(*sum>0);
             return;
         } 
         const int* mid = beg + len/2;
         int x=-123;
         int y=-123;
+        assert(t->taskPointer()==this);
+        if(t->meta.pendingcnt.load()!=0){
+            println("before spawn: pendingcnt="+std::to_string(t->meta.pendingcnt.load())+", refcnt="+std::to_string(t->meta.refcnt.load()));
+        }
+        //sleep(100);
         spawnPrivate<ParallelSum>(mid,end,&x);
 		spawn<ParallelSum>(beg,mid,&y);
+        if(t->meta.pendingcnt!=2&&t->meta.pendingcnt!=1){
+            println("between spawn and sync: pendingcnt="+std::to_string(t->meta.pendingcnt.load())+", refcnt="+std::to_string(t->meta.refcnt.load()));
+        }
         localSync();
+        //sync
+        if(t->meta.pendingcnt!=0){
+            println("after sync: pendingcnt="+std::to_string(t->meta.pendingcnt.load())+", refcnt="+std::to_string(t->meta.refcnt.load()));
+        }
+        assert(t->meta.synced==true);
         *sum=x+y;    
         if(x<0) println("x="+std::to_string(x));
         if(y<0) println("y="+std::to_string(y));

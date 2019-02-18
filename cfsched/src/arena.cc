@@ -63,10 +63,11 @@ void Arena::gc(){
 }
 
 void Arena::reclaim(Task* executed) noexcept{
+    return; //@debug
     auto t=FixSizedTask::getFixSizedTaskPointer(executed);
     if(t->location()==FixSizedTask::atStolenList) return;
     t->reset();
-    pushToFreeList(t);
+    pushToFreeList(t); //debug显示，这个函数出错，this和t都不可访问。。。
 }
 
 }
