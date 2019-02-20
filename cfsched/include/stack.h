@@ -10,9 +10,8 @@ namespace cfsched{
 class FixSizedTask;
 
 /*==================================================
- Stack is stack structure based on Moody Camel's
- lock-free ABA-free intrusive singly linked list.
- PrivateStack is a thread-unsafe version of Stack.
+ Stack structures based on intrusive singly linked 
+ lists. 
 ===================================================*/
 
 class Stack
@@ -59,5 +58,16 @@ private:
 };
 
 
+class ABAProneStack
+{
+public:
+    ABAProneStack() : stackHead(nullptr) {}
+    void            push(FixSizedTask*);
+    FixSizedTask*   pop(); //return nullptr on failure.
+    std::string     stats(); //debugging stats
+  private:
+    std::atomic<FixSizedTask*> stackHead;
+    std::mutex      mtx;
+};
 
 }

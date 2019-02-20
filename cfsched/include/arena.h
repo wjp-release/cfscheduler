@@ -100,9 +100,9 @@ private:
     }
     FixSizedTask    tasks[Options::ArenaSize];
     PrivateStack    freeList; 
-    BlockingStack   readyList;  
+    ABAProneStack   readyList;  
     PrivateStack    execList; 
-    BlockingStack   stolenList; 
+    ABAProneStack   stolenList; 
 };
 
 }

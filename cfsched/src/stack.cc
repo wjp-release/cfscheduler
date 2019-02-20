@@ -177,4 +177,37 @@ std::string BlockingStack::stats(){
     return duh;
 }
 
+
+void ABAProneStack::push(FixSizedTask* node)
+{
+    auto head = stackHead.load();
+    do{
+        node->meta.next.store(head);
+    }while (!stackHead.compare_exchange_strong(head, node));
+}
+
+FixSizedTask* ABAProneStack::pop()
+{
+    auto head = stackHead.load();
+    while (head != nullptr && !stackHead.compare_exchange_strong(head, head->meta.next.load())) continue;
+    return head;
+}
+
+std::string ABAProneStack::stats(){
+    std::string duh="Stack(";
+    int count=0;
+    FixSizedTask* pos = stackHead.load(std::memory_order_relaxed);
+    while(pos!=nullptr){
+        count++;
+        if(pos->location()!=FixSizedTask::atFreeList){
+            duh+=pos->taskPointer()->stats()+" ";
+            pos = pos->meta.next.load(std::memory_order_relaxed);
+        }else{
+            duh+="<empty> ";
+        }
+    }
+    duh+=")[count="+std::to_string(count)+"]";
+    return duh;
+}
+
 }
