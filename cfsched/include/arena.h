@@ -102,7 +102,7 @@ private:
     PrivateStack    freeList; 
     ABAProneStack   readyList;  
     PrivateStack    execList; 
-    ABAProneStack   stolenList; 
+    ABAProneStack   stolenList; //ABAProneStack is faster, dangerous but not wrong
 };
 
 }
