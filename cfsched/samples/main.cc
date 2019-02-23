@@ -100,12 +100,27 @@ void large_sum(){
     cfsched::Profiler::instance().print();
 }
 
+
+void huge_sum(){
+    cfsched::time_point start=cfsched::now();
+    cfsched::Pool::instance().start();
+    std::vector<int> arr;
+    for(int i=0;i<10000000;i++){
+        arr.push_back(1);
+    }
+    cfsched::println("Everything prepared, "+std::to_string(cfsched::ms_elapsed_count(start))+" ms elapsed.");
+    start=cfsched::now();
+    int res=cfsched::parallel_sum<1000>(arr.data(),arr.size());
+    cfsched::println("res="+std::to_string(res)+", "+std::to_string(cfsched::ms_elapsed_count(start))+" ms elapsed.");
+    cfsched::Profiler::instance().print();
+}
+
 //debug思路：多加assert，验证sum是不是负数。
 //去掉reclaim看看
 //目前仍有sum为负数，freelist中途出现nullptr，这两种情况。
 
 int main() {
-    large_sum();
+    huge_sum();
     return 0;
 }
 
