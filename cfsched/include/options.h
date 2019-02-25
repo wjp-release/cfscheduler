@@ -2,7 +2,10 @@
 #include <cstdint>
 
 //#define EnableInternalMonitor
-#define EnableProfiling
+//#define EnableProfiling
+//#define EnableDegbugging
+//#define DisableReclamation
+//#define EnableExcept
 
 namespace cfsched{
 

@@ -43,20 +43,26 @@ public:
     T*              emplaceToExec(FixSizedTask*parent, Args&&... args){
         FixSizedTask* addr=freeList.pop();
         if(addr==nullptr){
+    #ifdef EnableDegbugging   
             println("freelist size="+std::to_string(freeList.size()));
             assert(false&&"gc untested!");
+    #endif
             gc();
             addr=freeList.pop();
         }
         if(addr==nullptr){
+    #ifdef EnableDegbugging        
             println("still no space!");
+    #endif
             return nullptr;
         }
         T* task = new (addr->taskPointer()) T(std::forward<Args>(args)...);
         FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
         t->setParentAndIncRefcnt(parent);
+    #ifdef EnableDegbugging        
         assert(t->meta.pendingcnt.load()==0);
         assert(t->meta.synced.load()==false);
+    #endif
         pushToExecList(t);
         return task;        
     }
@@ -64,20 +70,26 @@ public:
     T*              emplaceToReady(FixSizedTask*parent, Args&&... args){
         FixSizedTask* addr=freeList.pop();
         if(addr==nullptr){
+    #ifdef EnableDegbugging        
             println("freelist size="+std::to_string(freeList.size()));
             assert(false&&"gc untested!");
+    #endif
             gc();
             addr=freeList.pop();
         }
         if(addr==nullptr){
+    #ifdef EnableDegbugging        
             println("still no space!");
             return nullptr;
+    #endif
         }       
         T* task = new (addr->taskPointer()) T(std::forward<Args>(args)...);
         FixSizedTask* t=FixSizedTask::getFixSizedTaskPointer(task);
         t->setParentAndIncRefcnt(parent);
+    #ifdef EnableDegbugging        
         assert(t->meta.pendingcnt.load()==0);
         assert(t->meta.synced.load()==false);
+    #endif
         pushToReadyList(t);
         return task;        
     }  

@@ -25,6 +25,7 @@ private:
     Profiler() : executedTaskCount(0),spawnedTaskCount(0) {}
 };
 
-#endif
 
 }
+
+#endif

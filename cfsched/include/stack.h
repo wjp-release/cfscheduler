@@ -4,6 +4,7 @@
 #include <atomic>
 #include <string>
 #include <mutex>
+#include "options.h"
 
 namespace cfsched{
 
@@ -48,12 +49,16 @@ public:
     FixSizedTask*   pop(); //return nullptr on failure.
     int             size(); 
     void            setid(uint8_t id){
+    #ifdef EnableDebugging
         workerid=id;
+    #endif
     }
     std::string     stats();//debugging stats
 private:
+#ifdef EnableDebugging
     int             count=0;
     uint8_t         workerid=0;
+#endif
     FixSizedTask*   stackHead;
 };
 

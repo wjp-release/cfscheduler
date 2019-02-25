@@ -19,8 +19,8 @@ public:
         std::atomic<uint32_t>       refcnt; // used ONLY to avoid ABA problem in CAS lock-free stacks
         std::atomic<uint32_t>       pendingcnt; // how many unfinished subtasks it still waits for
         FixSizedTask*               parent = nullptr; // parent task
-        volatile uint32_t           state = 0;
-        std::atomic<bool>           synced;
+        volatile uint32_t           state = 0; 
+        std::atomic<bool>           synced; // need release-acquire memory order such that updates are visible for sync-spinning threads
         static const uint32_t       locationMask=0x0000000f;
         static const uint32_t       workerIDMask=0x000000f0;
         static const uint32_t       isDoneMask=0x00000200;
@@ -44,7 +44,7 @@ public:
     void        assertBeforeSpawn();
     void        assertAfterSync();
     bool        isSynchronised() const noexcept{ 
-        return meta.synced.load(); // seq_cst better at debugging than acquire
+        return meta.synced.load(std::memory_order_acquire); // seq_cst or acquire
     }
     bool        isDone() const noexcept{ 
         return (meta.state&meta.isDoneMask)==meta.isDoneMask;
@@ -61,7 +61,7 @@ public:
         }
     }
     void        setIsSynchronised() noexcept{
-        meta.synced.store(true); // seq_cst better at debugging than release
+        meta.synced.store(true, std::memory_order_release); // seq_cst better at debugging than release
     }
     void        setLocation(TaskLocation location) noexcept{
         meta.state=(location&meta.locationMask)|(meta.state&~meta.locationMask);

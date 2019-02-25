@@ -13,8 +13,11 @@ Pool::Pool() noexcept :terminating(false), started(false), workerNumber(nr_cpu()
                 while(!started){ 
                     if(terminating) return;
                 }
+            #ifdef EnableDebugging
                 println("started!");
+            #endif
                 while(!terminating){
+            #ifdef EnableExcept
                     try{
                         workers[i].findAndRunATaskOrYield();
                     }catch(std::exception& e){ 
@@ -22,8 +25,13 @@ Pool::Pool() noexcept :terminating(false), started(false), workerNumber(nr_cpu()
                     }catch(...){
                         println("Worker"+std::to_string(i)+" unknown exception");
                     }
+            #else
+                workers[i].findAndRunATaskOrYield();
+            #endif    
                 }
+            #ifdef EnableDebugging
                 println("terminated!");
+            #endif
             }
         };
     }
@@ -38,7 +46,6 @@ Pool::~Pool()
     }
     delete [] workers;
 }
-
 
 Worker& Pool::getWorker(int index) noexcept{
     return workers[index];    
@@ -68,7 +75,7 @@ void Pool::wakeAllSleepingWorkers()noexcept
     }
 }
 
-void Pool::start(){
+void Pool::start() noexcept{
     if(started) return;
     started=true;
     #ifdef EnableInternalMonitor

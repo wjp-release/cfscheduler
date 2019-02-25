@@ -71,7 +71,7 @@ TEST_F(StackTest, multithreaded) {
                 }else{
                     duh+=" gets "+std::to_string(bobo->meta.state)+", refcnt="+std::to_string(bobo->meta.refcnt);
                 }
-                cfsched::println(duh);
+                //cfsched::println(duh);
                 cfsched::sleep(2);
             }
         }).detach();     

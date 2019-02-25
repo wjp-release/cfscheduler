@@ -32,7 +32,9 @@ std::string Task::stats(){
 void Task::externalSync()
 {
     auto t=RootTask::getRootTaskPointer(this);
+#ifdef EnableDebugging
     assert(t->isRoot());
+#endif
     std::unique_lock<std::mutex> lk(t->mtx);
     while(!t->isDone()){
         t->cv.wait(lk);
@@ -43,16 +45,20 @@ void Task::externalSync()
 void Task::localSync()
 {
     auto t=FixSizedTask::getFixSizedTaskPointer(this);
+#ifdef EnableDebugging
     if(t->meta.pendingcnt.load()!=2 && t->meta.pendingcnt.load()!=1){
         t->print("localSync() entry: ");
     }
+#endif
     while(!t->meta.synced.load()){
         Pool::instance().getWorker(Pool::instance().currentThreadIndex()).findAndRunATask();
     }
+#ifdef EnableDebugging
     assert(t->meta.synced.load());
     if(t->meta.pendingcnt.load()!=0){
         t->print("localSync() end: ");
     }
+#endif
 }
 
 /*=====================================================*/
@@ -61,8 +67,10 @@ void FixSizedTask::decreasePendingCount(){
     uint32_t pendingcnt= meta.pendingcnt.fetch_sub(1);
     if(pendingcnt==1){ // last child done
         setIsSynchronised();
+    #ifdef EnableDebugging
         assert(meta.pendingcnt.load()==0 && "now pendingcnt should be zero");
         assert(meta.synced.load()==true);
+    #endif
     } 
 }
 

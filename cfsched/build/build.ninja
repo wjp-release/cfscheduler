@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: cfsched
-# Configuration: Debug
+# Configuration: Release
 # =============================================================================
 
 #############################################
@@ -41,6 +41,16 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 #############################################
+# Utility command for test
+
+build CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+build test: phony CMakeFiles/test.util
+
+#############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
@@ -63,6 +73,15 @@ build src/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
   pool = console
   restat = 1
 build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
+
+#############################################
+# Utility command for edit_cache
+
+build src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/src && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+build src/edit_cache: phony src/CMakeFiles/edit_cache.util
 # =============================================================================
 # Object build statements for STATIC_LIBRARY target cfsched
 
@@ -73,43 +92,43 @@ build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
 build cmake_object_order_depends_target_cfsched: phony
 build src/CMakeFiles/cfsched.dir/arena.cc.o: CXX_COMPILER__cfsched ../src/arena.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/arena.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/buffer.cc.o: CXX_COMPILER__cfsched ../src/buffer.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/buffer.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/pool.cc.o: CXX_COMPILER__cfsched ../src/pool.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/pool.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/stack.cc.o: CXX_COMPILER__cfsched ../src/stack.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/stack.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/task.cc.o: CXX_COMPILER__cfsched ../src/task.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/task.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/utils.cc.o: CXX_COMPILER__cfsched ../src/utils.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/utils.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
 build src/CMakeFiles/cfsched.dir/worker.cc.o: CXX_COMPILER__cfsched ../src/worker.cc || cmake_object_order_depends_target_cfsched
   DEP_FILE = src/CMakeFiles/cfsched.dir/worker.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   OBJECT_FILE_DIR = src/CMakeFiles/cfsched.dir
@@ -122,7 +141,7 @@ build src/CMakeFiles/cfsched.dir/worker.cc.o: CXX_COMPILER__cfsched ../src/worke
 # Link the static library src/libcfsched.a
 
 build src/libcfsched.a: CXX_STATIC_LIBRARY_LINKER__cfsched src/CMakeFiles/cfsched.dir/arena.cc.o src/CMakeFiles/cfsched.dir/buffer.cc.o src/CMakeFiles/cfsched.dir/pool.cc.o src/CMakeFiles/cfsched.dir/stack.cc.o src/CMakeFiles/cfsched.dir/task.cc.o src/CMakeFiles/cfsched.dir/utils.cc.o src/CMakeFiles/cfsched.dir/worker.cc.o
-  LANGUAGE_COMPILE_FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2
+  LANGUAGE_COMPILE_FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
   OBJECT_DIR = src/CMakeFiles/cfsched.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -130,18 +149,28 @@ build src/libcfsched.a: CXX_STATIC_LIBRARY_LINKER__cfsched src/CMakeFiles/cfsche
   TARGET_PDB = cfsched.a.dbg
 
 #############################################
-# Utility command for edit_cache
+# Utility command for test
 
-build src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/src && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-  DESC = No interactive CMake dialog available...
+build src/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/src && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
   restat = 1
-build src/edit_cache: phony src/CMakeFiles/edit_cache.util
+build src/test: phony src/CMakeFiles/test.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
 # /mnt/d/projects/cfscheduler/cfsched/CMakeLists.txt
 # =============================================================================
 
+
+#############################################
+# Utility command for edit_cache
+
+build samples/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/samples && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+build samples/edit_cache: phony samples/CMakeFiles/edit_cache.util
 
 #############################################
 # Utility command for rebuild_cache
@@ -162,7 +191,7 @@ build samples/rebuild_cache: phony samples/CMakeFiles/rebuild_cache.util
 build cmake_object_order_depends_target_sample: phony || cmake_object_order_depends_target_cfsched
 build samples/CMakeFiles/sample.dir/main.cc.o: CXX_COMPILER__sample ../samples/main.cc || cmake_object_order_depends_target_sample
   DEP_FILE = samples/CMakeFiles/sample.dir/main.cc.o.d
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2   -std=gnu++11
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
   INCLUDES = -I.././include -I.././src
   OBJECT_DIR = samples/CMakeFiles/sample.dir
   OBJECT_FILE_DIR = samples/CMakeFiles/sample.dir
@@ -175,7 +204,7 @@ build samples/CMakeFiles/sample.dir/main.cc.o: CXX_COMPILER__sample ../samples/m
 # Link the executable samples/sample
 
 build samples/sample: CXX_EXECUTABLE_LINKER__sample samples/CMakeFiles/sample.dir/main.cc.o | src/libcfsched.a || src/libcfsched.a
-  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O0 -Wall -g2
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
   LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src src/libcfsched.a -lpthread
   LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src
   OBJECT_DIR = samples/CMakeFiles/sample.dir
@@ -185,23 +214,436 @@ build samples/sample: CXX_EXECUTABLE_LINKER__sample samples/CMakeFiles/sample.di
   TARGET_PDB = sample.dbg
 
 #############################################
+# Utility command for test
+
+build samples/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/samples && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+build samples/test: phony samples/CMakeFiles/test.util
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /mnt/d/projects/cfscheduler/cfsched/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build benchmarks/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/benchmarks && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+build benchmarks/rebuild_cache: phony benchmarks/CMakeFiles/rebuild_cache.util
+
+#############################################
 # Utility command for edit_cache
 
-build samples/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/samples && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+build benchmarks/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/benchmarks && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
-build samples/edit_cache: phony samples/CMakeFiles/edit_cache.util
+build benchmarks/edit_cache: phony benchmarks/CMakeFiles/edit_cache.util
+
+#############################################
+# Utility command for test
+
+build benchmarks/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/benchmarks && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+build benchmarks/test: phony benchmarks/CMakeFiles/test.util
+# =============================================================================
+# Object build statements for EXECUTABLE target benchmark2
+
+
+#############################################
+# Order-only phony target for benchmark2
+
+build cmake_object_order_depends_target_benchmark2: phony || cmake_object_order_depends_target_cfsched
+build benchmarks/CMakeFiles/benchmark2.dir/benchmark2.cc.o: CXX_COMPILER__benchmark2 ../benchmarks/benchmark2.cc || cmake_object_order_depends_target_benchmark2
+  DEP_FILE = benchmarks/CMakeFiles/benchmark2.dir/benchmark2.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem /usr/local/tbb/include
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark2.dir
+  OBJECT_FILE_DIR = benchmarks/CMakeFiles/benchmark2.dir
+
+# =============================================================================
+# Link build statements for EXECUTABLE target benchmark2
+
+
+#############################################
+# Link the executable benchmarks/benchmark2
+
+build benchmarks/benchmark2: CXX_EXECUTABLE_LINKER__benchmark2 benchmarks/CMakeFiles/benchmark2.dir/benchmark2.cc.o | src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 || src/libcfsched.a
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src:/usr/local/tbb/lib:/usr/local/tbb/lib/intel64/gcc4.7 src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src  -L/usr/local/tbb/lib
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark2.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = benchmarks/benchmark2
+  TARGET_PDB = benchmark2.dbg
+# =============================================================================
+# Object build statements for EXECUTABLE target benchmark1
+
+
+#############################################
+# Order-only phony target for benchmark1
+
+build cmake_object_order_depends_target_benchmark1: phony || cmake_object_order_depends_target_cfsched
+build benchmarks/CMakeFiles/benchmark1.dir/benchmark1.cc.o: CXX_COMPILER__benchmark1 ../benchmarks/benchmark1.cc || cmake_object_order_depends_target_benchmark1
+  DEP_FILE = benchmarks/CMakeFiles/benchmark1.dir/benchmark1.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem /usr/local/tbb/include
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark1.dir
+  OBJECT_FILE_DIR = benchmarks/CMakeFiles/benchmark1.dir
+
+# =============================================================================
+# Link build statements for EXECUTABLE target benchmark1
+
+
+#############################################
+# Link the executable benchmarks/benchmark1
+
+build benchmarks/benchmark1: CXX_EXECUTABLE_LINKER__benchmark1 benchmarks/CMakeFiles/benchmark1.dir/benchmark1.cc.o | src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 || src/libcfsched.a
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src:/usr/local/tbb/lib:/usr/local/tbb/lib/intel64/gcc4.7 src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src  -L/usr/local/tbb/lib
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark1.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = benchmarks/benchmark1
+  TARGET_PDB = benchmark1.dbg
+# =============================================================================
+# Object build statements for EXECUTABLE target benchmark3
+
+
+#############################################
+# Order-only phony target for benchmark3
+
+build cmake_object_order_depends_target_benchmark3: phony || cmake_object_order_depends_target_cfsched
+build benchmarks/CMakeFiles/benchmark3.dir/benchmark3.cc.o: CXX_COMPILER__benchmark3 ../benchmarks/benchmark3.cc || cmake_object_order_depends_target_benchmark3
+  DEP_FILE = benchmarks/CMakeFiles/benchmark3.dir/benchmark3.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem /usr/local/tbb/include
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark3.dir
+  OBJECT_FILE_DIR = benchmarks/CMakeFiles/benchmark3.dir
+
+# =============================================================================
+# Link build statements for EXECUTABLE target benchmark3
+
+
+#############################################
+# Link the executable benchmarks/benchmark3
+
+build benchmarks/benchmark3: CXX_EXECUTABLE_LINKER__benchmark3 benchmarks/CMakeFiles/benchmark3.dir/benchmark3.cc.o | src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 || src/libcfsched.a
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src:/usr/local/tbb/lib:/usr/local/tbb/lib/intel64/gcc4.7 src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src  -L/usr/local/tbb/lib
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark3.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = benchmarks/benchmark3
+  TARGET_PDB = benchmark3.dbg
+# =============================================================================
+# Object build statements for EXECUTABLE target benchmark4
+
+
+#############################################
+# Order-only phony target for benchmark4
+
+build cmake_object_order_depends_target_benchmark4: phony || cmake_object_order_depends_target_cfsched
+build benchmarks/CMakeFiles/benchmark4.dir/benchmark4.cc.o: CXX_COMPILER__benchmark4 ../benchmarks/benchmark4.cc || cmake_object_order_depends_target_benchmark4
+  DEP_FILE = benchmarks/CMakeFiles/benchmark4.dir/benchmark4.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem /usr/local/tbb/include
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark4.dir
+  OBJECT_FILE_DIR = benchmarks/CMakeFiles/benchmark4.dir
+
+# =============================================================================
+# Link build statements for EXECUTABLE target benchmark4
+
+
+#############################################
+# Link the executable benchmarks/benchmark4
+
+build benchmarks/benchmark4: CXX_EXECUTABLE_LINKER__benchmark4 benchmarks/CMakeFiles/benchmark4.dir/benchmark4.cc.o | src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 || src/libcfsched.a
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src:/usr/local/tbb/lib:/usr/local/tbb/lib/intel64/gcc4.7 src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src  -L/usr/local/tbb/lib
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark4.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = benchmarks/benchmark4
+  TARGET_PDB = benchmark4.dbg
+# =============================================================================
+# Object build statements for EXECUTABLE target benchmark5
+
+
+#############################################
+# Order-only phony target for benchmark5
+
+build cmake_object_order_depends_target_benchmark5: phony || cmake_object_order_depends_target_cfsched
+build benchmarks/CMakeFiles/benchmark5.dir/benchmark5.cc.o: CXX_COMPILER__benchmark5 ../benchmarks/benchmark5.cc || cmake_object_order_depends_target_benchmark5
+  DEP_FILE = benchmarks/CMakeFiles/benchmark5.dir/benchmark5.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem /usr/local/tbb/include
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark5.dir
+  OBJECT_FILE_DIR = benchmarks/CMakeFiles/benchmark5.dir
+
+# =============================================================================
+# Link build statements for EXECUTABLE target benchmark5
+
+
+#############################################
+# Link the executable benchmarks/benchmark5
+
+build benchmarks/benchmark5: CXX_EXECUTABLE_LINKER__benchmark5 benchmarks/CMakeFiles/benchmark5.dir/benchmark5.cc.o | src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 || src/libcfsched.a
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src:/usr/local/tbb/lib:/usr/local/tbb/lib/intel64/gcc4.7 src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src  -L/usr/local/tbb/lib
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark5.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = benchmarks/benchmark5
+  TARGET_PDB = benchmark5.dbg
+# =============================================================================
+# Object build statements for EXECUTABLE target benchmark6
+
+
+#############################################
+# Order-only phony target for benchmark6
+
+build cmake_object_order_depends_target_benchmark6: phony || cmake_object_order_depends_target_cfsched
+build benchmarks/CMakeFiles/benchmark6.dir/benchmark6.cc.o: CXX_COMPILER__benchmark6 ../benchmarks/benchmark6.cc || cmake_object_order_depends_target_benchmark6
+  DEP_FILE = benchmarks/CMakeFiles/benchmark6.dir/benchmark6.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem /usr/local/tbb/include
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark6.dir
+  OBJECT_FILE_DIR = benchmarks/CMakeFiles/benchmark6.dir
+
+# =============================================================================
+# Link build statements for EXECUTABLE target benchmark6
+
+
+#############################################
+# Link the executable benchmarks/benchmark6
+
+build benchmarks/benchmark6: CXX_EXECUTABLE_LINKER__benchmark6 benchmarks/CMakeFiles/benchmark6.dir/benchmark6.cc.o | src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 || src/libcfsched.a
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src:/usr/local/tbb/lib:/usr/local/tbb/lib/intel64/gcc4.7 src/libcfsched.a /usr/local/tbb/lib/intel64/gcc4.7/libtbb.so.2 -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src  -L/usr/local/tbb/lib
+  OBJECT_DIR = benchmarks/CMakeFiles/benchmark6.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = benchmarks/benchmark6
+  TARGET_PDB = benchmark6.dbg
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /mnt/d/projects/cfscheduler/cfsched/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build googletest/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/googletest && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+build googletest/rebuild_cache: phony googletest/CMakeFiles/rebuild_cache.util
+
+#############################################
+# Utility command for test
+
+build googletest/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/googletest && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+build googletest/test: phony googletest/CMakeFiles/test.util
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target gtest
+
+
+#############################################
+# Order-only phony target for gtest
+
+build cmake_object_order_depends_target_gtest: phony
+build googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o: CXX_COMPILER__gtest ../googletest/src/gtest-all.cc || cmake_object_order_depends_target_gtest
+  DEP_FILE = googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -pthread -std=gnu++11
+  INCLUDES = -I.././include -I.././src -I../googletest/include -I../googletest
+  OBJECT_DIR = googletest/CMakeFiles/gtest.dir
+  OBJECT_FILE_DIR = googletest/CMakeFiles/gtest.dir/src
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target gtest
+
+
+#############################################
+# Link the static library lib/libgtest.a
+
+build lib/libgtest.a: CXX_STATIC_LIBRARY_LINKER__gtest googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
+  LANGUAGE_COMPILE_FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  OBJECT_DIR = googletest/CMakeFiles/gtest.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = lib/libgtest.a
+  TARGET_PDB = gtest.a.dbg
+
+#############################################
+# Utility command for edit_cache
+
+build googletest/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/googletest && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+build googletest/edit_cache: phony googletest/CMakeFiles/edit_cache.util
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target gtest_main
+
+
+#############################################
+# Order-only phony target for gtest_main
+
+build cmake_object_order_depends_target_gtest_main: phony || cmake_object_order_depends_target_gtest
+build googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o: CXX_COMPILER__gtest_main ../googletest/src/gtest_main.cc || cmake_object_order_depends_target_gtest_main
+  DEP_FILE = googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -pthread -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem ../googletest/include -isystem ../googletest
+  OBJECT_DIR = googletest/CMakeFiles/gtest_main.dir
+  OBJECT_FILE_DIR = googletest/CMakeFiles/gtest_main.dir/src
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target gtest_main
+
+
+#############################################
+# Link the static library lib/libgtest_main.a
+
+build lib/libgtest_main.a: CXX_STATIC_LIBRARY_LINKER__gtest_main googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o || lib/libgtest.a
+  LANGUAGE_COMPILE_FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  OBJECT_DIR = googletest/CMakeFiles/gtest_main.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = lib/libgtest_main.a
+  TARGET_PDB = gtest_main.a.dbg
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /mnt/d/projects/cfscheduler/cfsched/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build tests/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/tests && /usr/bin/cmake -H/mnt/d/projects/cfscheduler/cfsched -B/mnt/d/projects/cfscheduler/cfsched/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+build tests/rebuild_cache: phony tests/CMakeFiles/rebuild_cache.util
+
+#############################################
+# Utility command for edit_cache
+
+build tests/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/tests && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+build tests/edit_cache: phony tests/CMakeFiles/edit_cache.util
+# =============================================================================
+# Object build statements for EXECUTABLE target tests
+
+
+#############################################
+# Order-only phony target for tests
+
+build cmake_object_order_depends_target_tests: phony || cmake_object_order_depends_target_cfsched cmake_object_order_depends_target_gtest cmake_object_order_depends_target_gtest_main
+build tests/CMakeFiles/tests.dir/parallel_sum.test.cc.o: CXX_COMPILER__tests ../tests/parallel_sum.test.cc || cmake_object_order_depends_target_tests
+  DEP_FILE = tests/CMakeFiles/tests.dir/parallel_sum.test.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -pthread -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem ../googletest/include -isystem ../googletest
+  OBJECT_DIR = tests/CMakeFiles/tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/tests.dir
+build tests/CMakeFiles/tests.dir/stack.test.cc.o: CXX_COMPILER__tests ../tests/stack.test.cc || cmake_object_order_depends_target_tests
+  DEP_FILE = tests/CMakeFiles/tests.dir/stack.test.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -pthread -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem ../googletest/include -isystem ../googletest
+  OBJECT_DIR = tests/CMakeFiles/tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/tests.dir
+build tests/CMakeFiles/tests.dir/task.test.cc.o: CXX_COMPILER__tests ../tests/task.test.cc || cmake_object_order_depends_target_tests
+  DEP_FILE = tests/CMakeFiles/tests.dir/task.test.cc.o.d
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall   -pthread -std=gnu++11
+  INCLUDES = -I.././include -I.././src -isystem ../googletest/include -isystem ../googletest
+  OBJECT_DIR = tests/CMakeFiles/tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/tests.dir
+
+# =============================================================================
+# Link build statements for EXECUTABLE target tests
+
+
+#############################################
+# Link the executable tests/tests
+
+build tests/tests: CXX_EXECUTABLE_LINKER__tests tests/CMakeFiles/tests.dir/parallel_sum.test.cc.o tests/CMakeFiles/tests.dir/stack.test.cc.o tests/CMakeFiles/tests.dir/task.test.cc.o | lib/libgtest_main.a src/libcfsched.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a src/libcfsched.a
+  FLAGS = -std=c++11 -fPIC -Wno-reorder  -O2 -Wall
+  LINK_LIBRARIES = -Wl,-rpath,/mnt/d/projects/cfscheduler/cfsched/./src lib/libgtest_main.a src/libcfsched.a lib/libgtest.a -pthread -lpthread
+  LINK_PATH = -L/mnt/d/projects/cfscheduler/cfsched/./src
+  OBJECT_DIR = tests/CMakeFiles/tests.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/tests
+  TARGET_PDB = tests.dbg
+
+#############################################
+# Utility command for test
+
+build tests/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /mnt/d/projects/cfscheduler/cfsched/build/tests && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+build tests/test: phony tests/CMakeFiles/test.util
 # =============================================================================
 # Target aliases.
 
+build benchmark1: phony benchmarks/benchmark1
+build benchmark2: phony benchmarks/benchmark2
+build benchmark3: phony benchmarks/benchmark3
+build benchmark4: phony benchmarks/benchmark4
+build benchmark5: phony benchmarks/benchmark5
+build benchmark6: phony benchmarks/benchmark6
 build cfsched: phony src/libcfsched.a
+build gtest: phony lib/libgtest.a
+build gtest_main: phony lib/libgtest_main.a
 build libcfsched.a: phony src/libcfsched.a
+build libgtest.a: phony lib/libgtest.a
+build libgtest_main.a: phony lib/libgtest_main.a
 build sample: phony samples/sample
+build tests: phony tests/tests
 # =============================================================================
 # Folder targets.
 
 # =============================================================================
+# =============================================================================
+
+#############################################
+# Folder: /mnt/d/projects/cfscheduler/cfsched/build/benchmarks
+
+build  benchmarks/all: phony benchmark2 benchmark1 benchmark3 benchmark4 benchmark5 benchmark6
+# =============================================================================
+
+#############################################
+# Folder: /mnt/d/projects/cfscheduler/cfsched/build/googletest
+
+build  googletest/all: phony gtest gtest_main
 # =============================================================================
 
 #############################################
@@ -215,13 +657,19 @@ build  samples/all: phony sample
 
 build  src/all: phony cfsched
 # =============================================================================
+
+#############################################
+# Folder: /mnt/d/projects/cfscheduler/cfsched/build/tests
+
+build  tests/all: phony tests
+# =============================================================================
 # Built-in targets
 
 
 #############################################
 # The main all target.
 
-build all: phony src/libcfsched.a samples/sample
+build all: phony src/libcfsched.a samples/sample benchmarks/benchmark2 benchmarks/benchmark1 benchmarks/benchmark3 benchmarks/benchmark4 benchmarks/benchmark5 benchmarks/benchmark6 lib/libgtest.a lib/libgtest_main.a tests/tests
 
 #############################################
 # Make the all target the default.
@@ -231,13 +679,13 @@ default all
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../samples/CMakeLists.txt ../src/CMakeLists.txt /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../benchmarks/CMakeLists.txt ../googletest/CMakeLists.txt ../googletest/cmake/internal_utils.cmake ../samples/CMakeLists.txt ../src/CMakeLists.txt ../tests/CMakeLists.txt /usr/local/tbb/cmake/TBBConfig.cmake /usr/local/tbb/cmake/TBBConfigVersion.cmake /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/CheckIncludeFile.cmake /usr/share/cmake-3.10/Modules/CheckLibraryExists.cmake /usr/share/cmake-3.10/Modules/CheckSymbolExists.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /usr/share/cmake-3.10/Modules/FindPythonInterp.cmake /usr/share/cmake-3.10/Modules/FindThreads.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake
   pool = console
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ../CMakeLists.txt ../samples/CMakeLists.txt ../src/CMakeLists.txt /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake: phony
+build ../CMakeLists.txt ../benchmarks/CMakeLists.txt ../googletest/CMakeLists.txt ../googletest/cmake/internal_utils.cmake ../samples/CMakeLists.txt ../src/CMakeLists.txt ../tests/CMakeLists.txt /usr/local/tbb/cmake/TBBConfig.cmake /usr/local/tbb/cmake/TBBConfigVersion.cmake /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/CheckIncludeFile.cmake /usr/share/cmake-3.10/Modules/CheckLibraryExists.cmake /usr/share/cmake-3.10/Modules/CheckSymbolExists.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /usr/share/cmake-3.10/Modules/FindPythonInterp.cmake /usr/share/cmake-3.10/Modules/FindThreads.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake: phony
 
 #############################################
 # Clean all the built files.

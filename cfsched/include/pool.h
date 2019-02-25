@@ -27,7 +27,7 @@ public:
     void                terminate() noexcept{
         terminating=true;
     }
-    void                start();
+    void                start() noexcept;
     std::string         who() const noexcept; //debug
     uint8_t             currentThreadIndex()const noexcept;
     uint8_t             getWorkerNumber()const noexcept{

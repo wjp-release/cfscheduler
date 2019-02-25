@@ -37,7 +37,9 @@ Task* Arena::takeFromExec(){
 }
 
 void Arena::gc(){
+#ifdef EnableDebugging
     println("garbage collection！");
+#endif
     PrivateStack tmp;
     FixSizedTask* task;
     int patience=3;
@@ -63,7 +65,9 @@ void Arena::gc(){
 }
 
 void Arena::reclaim(Task* executed) noexcept{
-    return; //@debug
+#ifdef DisableReclamation
+    return;
+#endif
     auto t=FixSizedTask::getFixSizedTaskPointer(executed);
     if(t->location()==FixSizedTask::atStolenList) return;
     t->reset();
